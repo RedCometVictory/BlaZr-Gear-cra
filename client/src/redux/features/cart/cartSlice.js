@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import cartService from "./cartService";
 
 // const setAlert = (msg, alertType, timeout = 6000) => {
@@ -31,6 +32,8 @@ export const getCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to get cart.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -49,6 +52,8 @@ export const getCartGuest = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to get guest cart.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -69,6 +74,8 @@ export const resetCartOnProductDelete = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to reset guest cart.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -87,6 +94,8 @@ export const addItemToCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to add to cart.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -105,6 +114,8 @@ export const addItemToCartGuest = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to add to cart.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -123,6 +134,8 @@ export const updateItemInCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to add to cart.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -141,6 +154,8 @@ export const removeFromCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to remove item from cart.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -159,6 +174,8 @@ export const removeFromCartGuest = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+        toast.error("Failed to remove item from cart.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -176,6 +193,8 @@ export const shippingAddressForCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to set shipping address for cart.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -193,6 +212,8 @@ export const paymentMethodForCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to set payment method from cart.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -202,14 +223,14 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    cartReset: (state) => initialState,
     clearCart: (state) => {
       localStorage.removeItem('__cart')
       localStorage.removeItem('__shippingAddress')
       localStorage.removeItem('__paymentMethod')
-      state.cart = []
-      state.shippingAddress = ''
-      state.paymentMethod = ''
+      state.cartItems = []
+      state.shippingAddress = {}
+      state.paymentMethod = null
     }
   },
   extraReducers: (builder) => {
@@ -337,5 +358,5 @@ export const cartSlice = createSlice({
   }
 });
 
-export const { reset, clearCart } = cartSlice.actions;
+export const { cartReset, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

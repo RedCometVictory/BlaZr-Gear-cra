@@ -31,10 +31,10 @@ const listProductDetails = async (prod_id) => {
   return result;
 };
 
-const createProduct = async (productForm, history) => {
+const createProduct = async (productForm, navigate) => {
   let servicedData = await createProductForm(productForm);
   await api.post(`/products`, servicedData);
-  return history.push('/admin/product-list');
+  return navigate('/admin/product-list');
 };
 
 const createProductReview = async (prod_id, reviewForm, currProductByIdReviews) => {
@@ -120,9 +120,9 @@ const updateProduct = async (prod_id, productForm, currProdById) => {
   return newState;
 };
 
-const deleteProduct = async (prod_id, history) => {
+const deleteProduct = async (prod_id, navigate) => {
   await api.delete(`/products/${prod_id}/remove`);
-  return history.push('/admin/product-list');
+  return navigate('/admin/product-list');
 };
 
 const productService = {

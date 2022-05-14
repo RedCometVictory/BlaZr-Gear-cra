@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import imageService from "./imageService";
 
 // const setAlert = (msg, alertType, timeout = 6000) => {
@@ -31,6 +32,8 @@ export const getAllImages = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to retrieve images.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -48,6 +51,8 @@ export const getImageDetails = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to list image details.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -55,9 +60,9 @@ export const getImageDetails = createAsyncThunk(
 
 export const deleteImage = createAsyncThunk(
   'image/delete',
-  async ({image_id, history}, thunkAPI) => {
+  async ({image_id, navigate}, thunkAPI) => {
     try {
-      return await imageService.deleteImage(image_id, history);
+      return await imageService.deleteImage(image_id, navigate);
     } catch (err) {
       const message =
         (err.response &&
@@ -65,6 +70,8 @@ export const deleteImage = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to delete image.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -109,6 +116,7 @@ export const imageSlice = createSlice({
       })
       .add(deleteImage.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success("Deleted image.", {theme: "colored"});
       })
       .add(deleteImage.rejected, (state, action) => {
         state.loading = false;

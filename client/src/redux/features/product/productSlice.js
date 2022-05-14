@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import productService from "./productService";
 
 const initialState = {
@@ -10,7 +11,7 @@ const initialState = {
   page: null,
   pages: null,
   loading: true,
-  errors: []
+  error: []
 }
 
 export const getAllProductIds = createAsyncThunk(
@@ -25,6 +26,8 @@ export const getAllProductIds = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to list product ids.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -42,6 +45,8 @@ export const listAllCategories = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to list categories.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -59,6 +64,8 @@ export const listAllProducts = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to list all products.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -76,6 +83,8 @@ export const listTopProducts = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to list top products.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -93,6 +102,8 @@ export const listProductDetails = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to list product details.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -100,9 +111,9 @@ export const listProductDetails = createAsyncThunk(
 
 export const createProduct = createAsyncThunk(
   'product/create',
-  async ({productForm, history}, thunkAPI) => {
+  async ({productForm, navigate}, thunkAPI) => {
     try {
-      return await productService.createProduct(productForm, history);
+      return await productService.createProduct(productForm, navigate);
     } catch (err) {
       const message =
         (err.response &&
@@ -110,6 +121,8 @@ export const createProduct = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to create product.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -128,6 +141,8 @@ export const createProductReview = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Your review already exists.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -146,6 +161,8 @@ export const updateProductReview = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to update product review.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -164,6 +181,8 @@ export const deleteProductReview = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to delete product review.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -182,6 +201,8 @@ export const updateProduct = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to update product.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -189,9 +210,9 @@ export const updateProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   'product/delete',
-  async ({prod_id, history}, thunkAPI) => {
+  async ({prod_id, navigate}, thunkAPI) => {
     try {
-      return await productService.deleteProduct(prod_id, history);
+      return await productService.deleteProduct(prod_id, navigate);
     } catch (err) {
       const message =
         (err.response &&
@@ -199,6 +220,8 @@ export const deleteProduct = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to delete product.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -279,6 +302,7 @@ export const productSlice = createSlice({
       })
       .add(createProduct.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success("Created product!", {theme: "colored"});
       })
       .add(createProduct.rejected, (state, action) => {
         state.loading = false;
@@ -318,6 +342,7 @@ export const productSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.productById = action.payload;
+        toast.success("Product review removed!", {theme: "colored"});
       })
       .add(deleteProductReview.rejected, (state, action) => {
         state.loading = false;
@@ -342,6 +367,7 @@ export const productSlice = createSlice({
       })
       .add(deleteProduct.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success("Deleted product.", {theme: "colored"});
       })
       .add(deleteProduct.rejected, (state, action) => {
         state.loading = false;

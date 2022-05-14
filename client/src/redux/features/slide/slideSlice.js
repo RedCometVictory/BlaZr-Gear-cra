@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import slideService from "./slideService";
 
 const initialState = {
   slides: [],
   slide: {},
   loading: true,
-  errors: [],
+  error: [],
 };
 
 export const getAllSlides = createAsyncThunk(
@@ -20,6 +21,8 @@ export const getAllSlides = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to retrieve slideshow.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -37,6 +40,8 @@ export const getSlideDetails = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to list slide details.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -44,9 +49,9 @@ export const getSlideDetails = createAsyncThunk(
 
 export const createSlide = createAsyncThunk(
   'slide/create',
-  async ({slideForm, history}, thunkAPI) => {
+  async ({slideForm, navigate}, thunkAPI) => {
     try {
-      return await slideService.createSlide(slideForm, history);
+      return await slideService.createSlide(slideForm, navigate);
     } catch (err) {
       const message =
         (err.response &&
@@ -54,6 +59,8 @@ export const createSlide = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to create slide.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -61,9 +68,9 @@ export const createSlide = createAsyncThunk(
 
 export const updateSlide = createAsyncThunk(
   'slide/update',
-  async ({slide_id, slideForm, history}, thunkAPI) => {
+  async ({slide_id, slideForm, navigate}, thunkAPI) => {
     try {
-      return await slideService.updateSlide(slide_id, slideForm, history);
+      return await slideService.updateSlide(slide_id, slideForm, navigate);
     } catch (err) {
       const message =
         (err.response &&
@@ -71,6 +78,8 @@ export const updateSlide = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to update slide.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -78,9 +87,9 @@ export const updateSlide = createAsyncThunk(
 
 export const deleteSlide = createAsyncThunk(
   'slide/delete',
-  async ({slide_id, history}, thunkAPI) => {
+  async ({slide_id, navigate}, thunkAPI) => {
     try {
-      return await slideService.deleteSlide(slide_id, history);
+      return await slideService.deleteSlide(slide_id, navigate);
     } catch (err) {
       const message =
         (err.response &&
@@ -88,6 +97,8 @@ export const deleteSlide = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to delete slide.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -130,6 +141,7 @@ export const slideSlice = createSlice({
       })
       .add(createSlide.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success("Created slide.", {theme: "colored"});
       })
       .add(createSlide.rejected, (state, action) => {
         state.loading = false;
@@ -142,6 +154,7 @@ export const slideSlice = createSlice({
       .add(updateSlide.fulfilled, (state, action) => {
         state.loading = false;
         state.slide = action.payload;
+        toast.success("Updated slide.", {theme: "colored"});
       })
       .add(updateSlide.rejected, (state, action) => {
         state.loading = false;
@@ -153,6 +166,7 @@ export const slideSlice = createSlice({
       })
       .add(deleteSlide.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success("Deleted slide.", {theme: "colored"});
       })
       .add(deleteSlide.rejected, (state, action) => {
         state.loading = false;

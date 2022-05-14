@@ -13,22 +13,22 @@ const getSlideDetails = async (slide_id) => {
   return result;
 };
 
-const createSlide = async (slideForm, history) => {
+const createSlide = async (slideForm, navigate) => {
   let servicedData = createUpdateSlideShowForm(slideForm);
   await api.post(`/slides/add`, servicedData);
-  return history.push('/admin/slide/list');
+  return navigate('/admin/slide/list');
 };
 
-const updateSlide = async (slide_id, slideForm, history) => {
+const updateSlide = async (slide_id, slideForm, navigate) => {
   let servicedData = await createUpdateSlideShowForm(slideForm);
   const res = await api.put(`/slides/${slide_id}/update`, servicedData);
-  history.push('/admin/slide/list');
+  navigate('/admin/slide/list');
   return res.data.data.slide;
 };
 
-const deleteSlide = async (slide_id, history) => {
+const deleteSlide = async (slide_id, navigate) => {
   await api.delete(`/slides/${slide_id}`);
-  history.push('/admin/slide/list');
+  navigate('/admin/slide/list');
 };
 
 const slideService = {

@@ -1,15 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import authService from "./authService";
 
-// const setAlert = (msg, alertType, timeout = 6000) => {
-//   const id = uuidv4();
-  
-// };
-// const alertService = {
-//   setAlert,
-//   removeAlert
-// }
-// export default alertService;
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: localStorage.getItem("__userInfo") ? true : false,
@@ -23,11 +15,7 @@ export const loadUser = createAsyncThunk(
   'auth/loadUser',
   async (_, thunkAPI) => {
     try {
-      return await authService.loadUser();
-      // TODO: CLIENT SIED---if (result.userInfo.stripe_cust_id) {
-      //   await dispatch(addCardToUser(result.userInfo.stripe_cust_id));
-      // }
-      // TODO: dispatch(setAlert('Failed to retrieve user info.', 'danger'))
+      return await authService.loadUser(thunkAPI);
     } catch (err) {
       const message =
         (err.response &&
@@ -35,6 +23,8 @@ export const loadUser = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to retrieve user info.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -44,9 +34,7 @@ export const registerUser = createAsyncThunk(
   'auth/register',
   async (formRegData, thunkAPI) => {
     try {
-      return await authService.registerUser(formRegData);
-      // TODO: dispatch(loadUser());
-      // TODO: dispatch(setAlert('Successfully registered. Welcome.', 'success'));
+      return await authService.registerUser(formRegData, thunkAPI);
     } catch (err) {
       const message =
         (err.response &&
@@ -54,6 +42,8 @@ export const registerUser = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to register.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -63,17 +53,16 @@ export const loginUser = createAsyncThunk(
   'auth/login',
   async (formData, thunkAPI) => {
     try {
-      return await authService.loginUser(formData);
-      // TODO: dispatch(loadUser());
-      // TODO: dispatch(setAlert('Welcome!', 'success'));
+      return await authService.loginUser(formData, thunkAPI);
     } catch (err) {
-      // TODO: dispatch(setAlert('Failed to login. Incorrect email or password.', 'danger'));
       const message =
         (err.response &&
           err.response.data &&
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to login. Incorrect email or password.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -81,17 +70,9 @@ export const loginUser = createAsyncThunk(
 
 export const logout = createAsyncThunk(
   'auth/logout',
-  async (history, thunkAPI) => {
+  async ({navigate, history}, thunkAPI) => {
     try {
-      return await authService.logout(history);
-      /* //TODO
-        dispatch({type: CART_CLEAR_ITEMS});
-        dispatch({type: CLEAR_CARD_INFO});
-        dispatch({type: USER_DETAILS_RESET});
-        dispatch({type: AUTH_USER_LOGOUT});
-        dispatch({type: ORDER_CLEAR_INFO});
-        dispatch(setAlert('Logout successful.', 'success'));
-      */
+      return await authService.logout(navigate, history, thunkAPI);
     } catch (err) {
       const message =
         (err.response &&
@@ -99,6 +80,7 @@ export const logout = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -106,15 +88,14 @@ export const logout = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
   'auth/delete',
-  async (history, thunkAPI) => {
+  async (navigate, thunkAPI) => {
     try {
-      return await authService.deleteUser(history);
-      /* // TODO: dispatch(setAlert('Your user account has been deleted.', 'success'));
+      return await authService.deleteUser(navigate);
+      /* // TODO:
         dispatch({type: CART_CLEAR_ITEMS});
         dispatch({type: USER_DETAILS_RESET});
         dispatch({type: AUTH_USER_DELETE_REQUEST});
       */
-     // TODO: dispatch(setAlert("Failed to delete account.", "danger"));
     } catch (err) {
       const message =
         (err.response &&
@@ -122,6 +103,8 @@ export const deleteUser = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to delete account.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -139,6 +122,8 @@ export const forgotPassword = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to send reset link. Check email address and try again.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -156,6 +141,8 @@ export const verifyPassword = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Reset link invalid. Please try password reset again.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -163,9 +150,9 @@ export const verifyPassword = createAsyncThunk(
 
 export const resetPassword = createAsyncThunk(
   'auth/resetPassword',
-  async ({token, email, passwords, history}, thunkAPI) => {
+  async ({token, email, passwords, navigate}, thunkAPI) => {
     try {
-      return await authService.resetPassword(token, email, passwords, history);
+      return await authService.resetPassword(token, email, passwords, navigate);
     } catch (err) {
       const message =
         (err.response &&
@@ -173,6 +160,8 @@ export const resetPassword = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to reset password. Please try password reset again.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -191,18 +180,28 @@ export const refreshAccessToken = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to refresh token.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-export const alertSlice = createSlice({
-  name: 'alert',
+export const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
-    reset: (state, action) => {
+    authReset: (state, action) => {
       state = initialState;
       // [...state.alert, action.payload]
+    },
+    clearAuth: (state) => {
+      localStorage.removeItem('token')
+      // localStorage.removeItem('__userInfo')
+      state.token = null
+      state.isAuthenticated = false
+      state.loading = false
+      state.userInfo = null
     }
   },
   extraReducers: (builder) => {
@@ -229,6 +228,7 @@ export const alertSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = true;
         state.userInfo = action.payload.userInfo;
+        toast.success("Successfully registered. Welcome.", {theme: "colored"});
       })
       .add(registerUser.rejected, (state, action) => {
         state.loading = false;
@@ -243,6 +243,7 @@ export const alertSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = true;
         state.userInfo = action.payload.userInfo;
+        toast.success("Welcome!", {theme: "colored"});
       })
       .add(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -257,6 +258,7 @@ export const alertSlice = createSlice({
         state.token = null;
         state.loading = false;
         state.isAuthenticated = false;
+        toast.success("Logout successful.", {theme: "colored"});
         state.userInfo = null;
       })
       .add(logout.rejected, (state, action) => {
@@ -273,6 +275,7 @@ export const alertSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = false;
         state.userInfo = null;
+        toast.success("Your account has been deleted.", {theme: "colored"});
       })
       .add(deleteUser.rejected, (state, action) => {
         state.loading = false;
@@ -288,6 +291,7 @@ export const alertSlice = createSlice({
         state.loading = false;
         state.allowReset = false;
         // state.userInfo = null;
+        toast.success("Password reset link sent to your email.", {theme: "colored"});
       })
       .add(forgotPassword.rejected, (state, action) => {
         state.loading = false;
@@ -302,6 +306,7 @@ export const alertSlice = createSlice({
         state.loading = false;
         state.allowReset = true;
         // state.userInfo = null;
+        toast.success("Reset link valid.", {theme: "colored"});
       })
       .add(verifyPassword.rejected, (state, action) => {
         state.loading = false;
@@ -316,6 +321,7 @@ export const alertSlice = createSlice({
         state.loading = false;
         state.allowReset = false;
         // state.userInfo = null;
+        toast.success("Password reset. Please login using new password.", {theme: "colored"});
       })
       .add(resetPassword.rejected, (state, action) => {
         state.loading = false;
@@ -337,5 +343,5 @@ export const alertSlice = createSlice({
   }
 });
 
-export const { reset } = alertSlice.actions;
-export default alertSlice.reducer;
+export const { authReset, clearAuth } = authSlice.actions;
+export default authSlice.reducer;

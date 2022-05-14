@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import orderService from "./orderService";
 
 const initialState = {
@@ -7,15 +8,14 @@ const initialState = {
   page: null,
   pages: null,
   loading: true,
-  errors: []
+  error: []
 };
 
 export const createOrder = createAsyncThunk(
   'order/create',
   async (orderFormData, thunkAPI) => {
     try {
-      return await orderService.createOrder(orderFormData);
-      // TODO: clear cart upon order creating and remove __cart from LS:localStorage.removeItem('__cart');
+      return await orderService.createOrder(orderFormData, thunkAPI);
     } catch (err) {
       const message =
         (err.response &&
@@ -23,6 +23,8 @@ export const createOrder = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to create order.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -40,6 +42,8 @@ export const getAllUserOrders = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to list orders.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -57,6 +61,8 @@ export const getAllAdminOrders = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to list orders.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -74,6 +80,8 @@ export const getOrderDetails = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to list order.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -91,6 +99,8 @@ export const getOrderDetailAdmin = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to list order.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -108,6 +118,8 @@ export const payOrder = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to pay order.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -125,6 +137,8 @@ export const updateOrderStatusToShipped = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to change shipping status of order.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -142,6 +156,8 @@ export const deliverOrder = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to change delivery status of order.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -159,6 +175,8 @@ export const refundOrder = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to change order status to refund.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -177,6 +195,8 @@ export const refundPayPalOrder = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to change order status to refund.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -184,9 +204,9 @@ export const refundPayPalOrder = createAsyncThunk(
 
 export const deleteOrder = createAsyncThunk(
   'image/delete',
-  async ({order_id, history}, thunkAPI) => {
+  async ({order_id, navigate}, thunkAPI) => {
     try {
-      return await orderService.deleteImage(order_id, history);
+      return await orderService.deleteImage(order_id, navigate);
     } catch (err) {
       const message =
         (err.response &&
@@ -194,6 +214,8 @@ export const deleteOrder = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
+      toast.error("Failed to delete order.", {theme: "colored"});
+      toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -203,7 +225,7 @@ export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    orderReset: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -300,6 +322,7 @@ export const orderSlice = createSlice({
           orderItems: [...state.order.orderItems],
           userInfo: {...state.order.userInfo}
         };
+        toast.success("Order has been shipped.", {theme: "colored"});
       })
       .add(updateOrderStatusToShipped.rejected, (state, action) => {
         state.loading = false;
@@ -317,6 +340,7 @@ export const orderSlice = createSlice({
           orderItems: [...state.order.orderItems],
           userInfo: {...state.order.userInfo}
         };
+        toast.success("Order delivered.", {theme: "colored"});
       })
       .add(deliverOrder.rejected, (state, action) => {
         state.loading = false;
@@ -334,6 +358,7 @@ export const orderSlice = createSlice({
           orderItems: [...state.order.orderItems],
           userInfo: {...state.order.userInfo}
         };
+        toast.success("Order deleted.", {theme: "colored"});
       })
       .add(refundOrder.rejected, (state, action) => {
         state.loading = false;
@@ -351,6 +376,7 @@ export const orderSlice = createSlice({
           orderItems: [...state.order.orderItems],
           userInfo: {...state.order.userInfo}
         };
+        toast.success("Order refunded.", {theme: "colored"});
       })
       .add(refundPayPalOrder.rejected, (state, action) => {
         state.loading = false;
@@ -362,6 +388,7 @@ export const orderSlice = createSlice({
       })
       .add(deleteOrder.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success("Order deleted.", {theme: "colored"});
       })
       .add(deleteOrder.rejected, (state, action) => {
         state.loading = false;
@@ -371,5 +398,5 @@ export const orderSlice = createSlice({
   }
 });
 
-export const { reset } = orderSlice.actions;
+export const { orderReset } = orderSlice.actions;
 export default orderSlice.reducer;

@@ -12,9 +12,9 @@ const getImageDetails = async (image_id) => {
   return result;
 };
 
-const deleteImage = async (image_id, history) => {
+const deleteImage = async (image_id, navigate) => {
   await api.delete(`/images/${image_id}`);
-  return history.push('/admin/image/list');
+  return navigate('/admin/image/list');
 };
 
 const imageService = {

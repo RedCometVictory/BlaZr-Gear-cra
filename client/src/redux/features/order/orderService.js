@@ -1,8 +1,12 @@
 import api from "../../../utils/api";
+import { clearCart } from "../cart/cartSlice";
 
-const createOrder = async (orderFormData) => {
+const createOrder = async (orderFormData, thunkAPI) => {
+  thunkAPI.dispatch(clearCart());
   const res = await api.post('/orders', orderFormData);
   let result = res.data.data;
+
+  localStorage.removeItem('__cart');
   return result;
 };
 
@@ -58,9 +62,9 @@ const refundPayPalOrder = async (orderId, chargeData) => {
   return result;
 };
 
-const deleteOrder = async (order_id, history) => {
+const deleteOrder = async (order_id, navigate) => {
   await api.delete(`/orders/${order_id}/remove`);
-  return history.push('/admin/order-list');
+  return navigate('/admin/order-list');
 };
 
 const orderService = {

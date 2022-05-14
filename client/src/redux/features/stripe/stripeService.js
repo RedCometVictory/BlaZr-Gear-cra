@@ -1,51 +1,55 @@
 import api from "../../../utils/api";
-import { createUpdateSlideShowForm } from '../../../utils/formDataServices';
+import { refundOrder as refundOrderSlice } from "../order/orderSlice";
 
-const setCard = async (slide_id) => {
-  const res = await api.get(`/slides/${slide_id}`);
-  let result = res.data.data.slideInfo;
+const setCard = async (card) => {
+  return card;
+};
+
+const addCardToUser = async (stripeId) => {
+  const res = await api.post('/payment/add-user-card', { stripeId });
+  let result = res.data.data;
   return result;
 };
 
-const addCardToUser = async (slideForm, history) => {
-  let servicedData = createUpdateSlideShowForm(slideForm);
-  await api.post(`/slides/add`, servicedData);
-  return history.push('/admin/slide/list');
+const singleCharge = async (total, description, cart) => {
+  const chargeData = { total, description, cart };
+  const res = await api.post('/payment/single-checkout-charge', chargeData);
+  let result = res.data.data.clientSecret;
+  return result;
 };
 
-const singleCharge = async (slide_id, slideForm, history) => {
-  let servicedData = await createUpdateSlideShowForm(slideForm);
-  const res = await api.put(`/slides/${slide_id}/update`, servicedData);
-  history.push('/admin/slide/list');
-  return res.data.data.slide;
+const saveCardAndCharge = async (total, description, cart) => {
+  const chargeData = {total, description, cart};
+  const res = await api.post('/payment/save-card-charge', chargeData);
+  let result = res.data.data.clientSecret;
+  return result;
 };
 
-const saveCardAndCharge = async (slide_id, slideForm, history) => {
-  let servicedData = await createUpdateSlideShowForm(slideForm);
-  const res = await api.put(`/slides/${slide_id}/update`, servicedData);
-  history.push('/admin/slide/list');
-  return res.data.data.slide;
+const singleChargeCard = async (card, total, description, cart) => {
+  const chargeData = {card, total, description, cart};
+  const res = await api.post('/payment/checkout-charge-card', chargeData);
+  let result = res.data.data.clientSecret;
+  return result;
 };
 
-const singleChargeCard = async (slide_id, slideForm, history) => {
-  let servicedData = await createUpdateSlideShowForm(slideForm);
-  const res = await api.put(`/slides/${slide_id}/update`, servicedData);
-  history.push('/admin/slide/list');
-  return res.data.data.slide;
+const deleteCard = async (cardId, currCards) => {
+  const res = await api.post('/payment/delete-card', {cardId});
+  let result = res.data.data;
+  // filter by payment method id
+  let removedPM = currCards.data.filter(pm => pm.id !== result.deleted.id);
+  return removedPM;
 };
 
-const deleteCard = async (slide_id, history) => {
-  await api.delete(`/slides/${slide_id}`);
-  history.push('/admin/slide/list');
-};
-const getStripeCharge = async (slide_id, history) => {
-  await api.delete(`/slides/${slide_id}`);
-  history.push('/admin/slide/list');
+const getStripeCharge = async (chargeId) => {
+  const res = await api.post('/payment/get-stripe-charge', { chargeId });
+  let result = res.data.data;
+  return result;
 };
 
-const refundCharge = async (slide_id, history) => {
-  await api.delete(`/slides/${slide_id}`);
-  history.push('/admin/slide/list');
+const refundCharge = async (orderId, userId, stripePaymentId, amount, thunkAPI) => {
+  const chargeData = { orderId, userId, stripePaymentId, amount };
+  await api.post(`/payment/refund-charge/order/${orderId}`, chargeData);
+  thunkAPI.dispatch(refundOrderSlice());
 };
 
 const stripeService = {

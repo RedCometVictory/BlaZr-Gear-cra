@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import history from './history';
 import store from '../redux/store';
-import { logout, refreshAccessToken } from '../redux/actions/authActions';
+import { logout, refreshAccessToken } from '../redux/features/auth/authSlice';
 
 const api = Axios.create({
   // baseURL: 'http://localhost:5000/api',
@@ -47,7 +47,7 @@ api.interceptors.response.use(
 
     if (response?.status === 401 && originalRequest.url.includes("auth/refresh-token")) {
       // stop loop
-      store.dispatch(logout(history));
+      store.dispatch(logout(null, history));
       return Promise.reject(error);
     }
     if (response?.status === 401 && !originalRequest._retry) {
