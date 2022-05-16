@@ -24,7 +24,7 @@ const ResetPassword = () => {
 
   // TODO --- get token and email as query values
   useEffect(() => {
-    dispatch(verifyPassword(token, email, navigate))
+    dispatch(verifyPassword({token, email, navigate}))
   }, [dispatch]);
 
   useEffect(() => {
@@ -44,7 +44,8 @@ const ResetPassword = () => {
     if (password !== password2) {
       toast.error('Passwords do not match.', {theme: 'colored'});
     } else {
-      dispatch(resetPassword(token, email, formData, navigate));
+      let passInfo = {token, email, formData, navigate};
+      dispatch(resetPassword(passInfo));
     }
     setPasswordSent(true)
   }

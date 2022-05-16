@@ -38,7 +38,7 @@ const ReviewForm = ({prodId}) => {
     e.preventDefault();
     let formData = {...reviewFormData, rating};
 
-    dispatch(createProductReview(prodId, formData));
+    dispatch(createProductReview({prodId, formData}));
     setReviewFormData({ title: '', description: '' });
     setRating(1);
   };

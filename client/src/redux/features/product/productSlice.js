@@ -27,7 +27,7 @@ export const getAllProductIds = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list product ids.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -46,7 +46,7 @@ export const listAllCategories = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list categories.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -54,8 +54,17 @@ export const listAllCategories = createAsyncThunk(
 
 export const listAllProducts = createAsyncThunk(
   'product/getAll',
-  async ({keyword = '', category = '', pageNumber, itemsPerPage}, thunkAPI) => {
+  async ({keyword, category = '', pageNumber, itemsPerPage}, thunkAPI) => {
     try {
+      console.log("fetching all products")
+      console.log("keyword")
+      console.log(keyword)
+      console.log("category")
+      console.log(category)
+      console.log("pageNumber")
+      console.log(pageNumber)
+      console.log("itemsPerPage")
+      console.log(itemsPerPage)
       return await productService.listAllProducts(keyword, category, pageNumber, itemsPerPage);
     } catch (err) {
       const message =
@@ -65,7 +74,7 @@ export const listAllProducts = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list all products.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -84,7 +93,7 @@ export const listTopProducts = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list top products.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -103,7 +112,7 @@ export const listProductDetails = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list product details.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -122,7 +131,7 @@ export const createProduct = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to create product.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -142,7 +151,7 @@ export const createProductReview = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Your review already exists.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -162,7 +171,7 @@ export const updateProductReview = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to update product review.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -182,7 +191,7 @@ export const deleteProductReview = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to delete product review.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -190,7 +199,7 @@ export const deleteProductReview = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   'product/update',
-  async ({prod_id, productForm}, thunkAPI) => {
+  async ({prod_id, productForm, navigate}, thunkAPI) => {
     try {
       let currProductById = thunkAPI.getState().product.productById;
       return await productService.updateProduct(prod_id, productForm, currProductById);
@@ -202,7 +211,7 @@ export const updateProduct = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to update product.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -221,7 +230,7 @@ export const deleteProduct = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to delete product.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -235,141 +244,141 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .add(getAllProductIds.pending, (state) => {
+      .addCase(getAllProductIds.pending, (state) => {
         state.loading = true;
       })
-      .add(getAllProductIds.fulfilled, (state, action) => {
+      .addCase(getAllProductIds.fulfilled, (state, action) => {
         state.loading = false;
         state.productIds = action.payload;
       })
-      .add(getAllProductIds.rejected, (state, action) => {
+      .addCase(getAllProductIds.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(listAllCategories.pending, (state) => {
+      .addCase(listAllCategories.pending, (state) => {
         state.loading = true;
       })
-      .add(listAllCategories.fulfilled, (state, action) => {
+      .addCase(listAllCategories.fulfilled, (state, action) => {
         state.loading = false;
         state.categories = action.payload;
       })
-      .add(listAllCategories.rejected, (state, action) => {
+      .addCase(listAllCategories.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(listAllProducts.pending, (state) => {
+      .addCase(listAllProducts.pending, (state) => {
         state.loading = true;
       })
-      .add(listAllProducts.fulfilled, (state, action) => {
+      .addCase(listAllProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.products = action.payload.products;
         state.pages = action.payload.pages;
         state.page = action.payload.page;
       })
-      .add(listAllProducts.rejected, (state, action) => {
+      .addCase(listAllProducts.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(listTopProducts.pending, (state) => {
+      .addCase(listTopProducts.pending, (state) => {
         state.loading = true;
       })
-      .add(listTopProducts.fulfilled, (state, action) => {
+      .addCase(listTopProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.topProducts = action.payload;
       })
-      .add(listTopProducts.rejected, (state, action) => {
+      .addCase(listTopProducts.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(listProductDetails.pending, (state) => {
+      .addCase(listProductDetails.pending, (state) => {
         state.loading = true;
       })
-      .add(listProductDetails.fulfilled, (state, action) => {
+      .addCase(listProductDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.productById = action.payload;
       })
-      .add(listProductDetails.rejected, (state, action) => {
+      .addCase(listProductDetails.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(createProduct.pending, (state) => {
+      .addCase(createProduct.pending, (state) => {
         state.loading = true;
       })
-      .add(createProduct.fulfilled, (state, action) => {
+      .addCase(createProduct.fulfilled, (state, action) => {
         state.loading = false;
         toast.success("Created product!", {theme: "colored"});
       })
-      .add(createProduct.rejected, (state, action) => {
+      .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(createProductReview.pending, (state) => {
+      .addCase(createProductReview.pending, (state) => {
         state.loading = true;
       })
-      .add(createProductReview.fulfilled, (state, action) => {
+      .addCase(createProductReview.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.productById = action.payload;
       })
-      .add(createProductReview.rejected, (state, action) => {
+      .addCase(createProductReview.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(updateProductReview.pending, (state) => {
+      .addCase(updateProductReview.pending, (state) => {
         state.loading = true;
       })
-      .add(updateProductReview.fulfilled, (state, action) => {
+      .addCase(updateProductReview.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.productById = action.payload;
       })
-      .add(updateProductReview.rejected, (state, action) => {
+      .addCase(updateProductReview.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(deleteProductReview.pending, (state) => {
+      .addCase(deleteProductReview.pending, (state) => {
         state.loading = true;
       })
-      .add(deleteProductReview.fulfilled, (state, action) => {
+      .addCase(deleteProductReview.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.productById = action.payload;
         toast.success("Product review removed!", {theme: "colored"});
       })
-      .add(deleteProductReview.rejected, (state, action) => {
+      .addCase(deleteProductReview.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(updateProduct.pending, (state) => {
+      .addCase(updateProduct.pending, (state) => {
         state.loading = true;
       })
-      .add(updateProduct.fulfilled, (state, action) => {
+      .addCase(updateProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.productById = action.payload;
       })
-      .add(updateProduct.rejected, (state, action) => {
+      .addCase(updateProduct.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(deleteProduct.pending, (state) => {
+      .addCase(deleteProduct.pending, (state) => {
         state.loading = true;
       })
-      .add(deleteProduct.fulfilled, (state, action) => {
+      .addCase(deleteProduct.fulfilled, (state, action) => {
         state.loading = false;
         toast.success("Deleted product.", {theme: "colored"});
       })
-      .add(deleteProduct.rejected, (state, action) => {
+      .addCase(deleteProduct.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;

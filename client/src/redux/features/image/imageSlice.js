@@ -33,7 +33,7 @@ export const getAllImages = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to retrieve images.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -52,7 +52,7 @@ export const getImageDetails = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list image details.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -71,7 +71,7 @@ export const deleteImage = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to delete image.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -85,40 +85,40 @@ export const imageSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .add(getAllImages.pending, (state) => {
+      .addCase(getAllImages.pending, (state) => {
         state.loading = true;
       })
-      .add(getAllImages.fulfilled, (state, action) => {
+      .addCase(getAllImages.fulfilled, (state, action) => {
         state.loading = false;
         state.images = action.payload.images;
         state.pages = action.payload.pages;
         state.page = action.payload.page;
       })
-      .add(getAllImages.rejected, (state, action) => {
+      .addCase(getAllImages.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(getImageDetails.pending, (state) => {
+      .addCase(getImageDetails.pending, (state) => {
         state.loading = true;
       })
-      .add(getImageDetails.fulfilled, (state, action) => {
+      .addCase(getImageDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.image = action.payload;
       })
-      .add(getImageDetails.rejected, (state, action) => {
+      .addCase(getImageDetails.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(deleteImage.pending, (state) => {
+      .addCase(deleteImage.pending, (state) => {
         state.loading = true;
       })
-      .add(deleteImage.fulfilled, (state, action) => {
+      .addCase(deleteImage.fulfilled, (state, action) => {
         state.loading = false;
         toast.success("Deleted image.", {theme: "colored"});
       })
-      .add(deleteImage.rejected, (state, action) => {
+      .addCase(deleteImage.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;

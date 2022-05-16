@@ -38,11 +38,11 @@ const ProductItem = ({
   // const addToCart = (prod_id, qty = 1, cartItems) => {
   const addToCart = (prod_id, qty = 1) => {
     if (!isAuthenticated) {
-      dispatch(addItemToCartGuest(prod_id, qty));
+      dispatch(addItemToCartGuest({prod_id, qty}));
       // itemIsInCart(prod_id, cartItems)
     }
     if (isAuthenticated) {
-      dispatch(addItemToCartGuest(prod_id, qty));
+      dispatch(addItemToCartGuest({prod_id, qty}));
       // dispatch(addItemToCart(prod_id, qty));
       // itemIsInCart(prod_id, cartItems)
     }

@@ -26,7 +26,7 @@ export const setCard = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to set card.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -45,7 +45,7 @@ export const addCardToUser = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list card(s) of user account.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -64,7 +64,7 @@ export const singleCharge = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to charge card.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -83,7 +83,7 @@ export const saveCardAndCharge = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to charge card.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -102,7 +102,7 @@ export const singleChargeCard = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to charge card.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -121,7 +121,7 @@ export const getStripeCharge = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to refund card. Contact customer support recommended.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -141,7 +141,7 @@ export const refundCharge = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to refund card. Contact customer support recommended.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -161,7 +161,7 @@ export const deleteCard = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to remove card / payment method.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -175,103 +175,103 @@ export const stripeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .add(setCard.pending, (state) => {
+      .addCase(setCard.pending, (state) => {
         state.loading = true;
       })
-      .add(setCard.fulfilled, (state, action) => {
+      .addCase(setCard.fulfilled, (state, action) => {
         state.loading = false;
         state.cardToUse = action.payload;
         toast.success("Card set.", {theme: "colored"});
       })
-      .add(setCard.rejected, (state, action) => {
+      .addCase(setCard.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(addCardToUser.pending, (state) => {
+      .addCase(addCardToUser.pending, (state) => {
         state.loading = true;
       })
-      .add(addCardToUser.fulfilled, (state, action) => {
+      .addCase(addCardToUser.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.cards = action.payload.cards;
         toast.success("Cards added.", {theme: "colored"});
       })
-      .add(addCardToUser.rejected, (state, action) => {
+      .addCase(addCardToUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(singleCharge.pending, (state) => {
+      .addCase(singleCharge.pending, (state) => {
         state.loading = true;
       })
-      .add(singleCharge.fulfilled, (state, action) => {
+      .addCase(singleCharge.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.clientSecret = action.payload;
         toast.success("Charge successful.", {theme: "colored"});
       })
-      .add(singleCharge.rejected, (state, action) => {
+      .addCase(singleCharge.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(saveCardAndCharge.pending, (state) => {
+      .addCase(saveCardAndCharge.pending, (state) => {
         state.loading = true;
       })
-      .add(saveCardAndCharge.fulfilled, (state, action) => {
+      .addCase(saveCardAndCharge.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.clientSecret = action.payload;
       })
-      .add(saveCardAndCharge.rejected, (state, action) => {
+      .addCase(saveCardAndCharge.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(singleChargeCard.pending, (state) => {
+      .addCase(singleChargeCard.pending, (state) => {
         state.loading = true;
       })
-      .add(singleChargeCard.fulfilled, (state, action) => {
+      .addCase(singleChargeCard.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.clientSecret = action.payload;
         toast.success("Charge successful.", {theme: "colored"});
       })
-      .add(singleChargeCard.rejected, (state, action) => {
+      .addCase(singleChargeCard.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(getStripeCharge.pending, (state) => {
+      .addCase(getStripeCharge.pending, (state) => {
         state.loading = true;
       })
-      .add(getStripeCharge.fulfilled, (state, action) => {
+      .addCase(getStripeCharge.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.clientSecret = action.payload;
         toast.success("Refund successful.", {theme: "colored"});
       })
-      .add(getStripeCharge.rejected, (state, action) => {
+      .addCase(getStripeCharge.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(refundCharge.pending, (state) => {
+      .addCase(refundCharge.pending, (state) => {
         state.loading = true;
       })
-      .add(refundCharge.fulfilled, (state, action) => {
+      .addCase(refundCharge.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.clientSecret = action.payload;
         toast.success("Refund successful.", {theme: "colored"});
       })
-      .add(refundCharge.rejected, (state, action) => {
+      .addCase(refundCharge.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(deleteCard.pending, (state) => {
+      .addCase(deleteCard.pending, (state) => {
         state.loading = true;
       })
-      .add(deleteCard.fulfilled, (state, action) => {
+      .addCase(deleteCard.fulfilled, (state, action) => {
         state.loading = false;
         state.cards.data = action.payload;
       })
-      .add(deleteCard.rejected, (state, action) => {
+      .addCase(deleteCard.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

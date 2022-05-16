@@ -22,7 +22,7 @@ export const getUserProfile = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to get user profile.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -41,7 +41,7 @@ export const getUserProfileAdmin = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to get user profile.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -60,7 +60,7 @@ export const getUsersAdmin = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list users.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -79,7 +79,7 @@ export const updateUserInfo = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to update user information.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -98,7 +98,7 @@ export const createUserProfile = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to create user profile.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -117,7 +117,7 @@ export const updateUserProfile = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to update user profile.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -136,7 +136,7 @@ export const updateUserAdmin = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Admin failed to update user profile.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -150,87 +150,87 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .add(getUserProfile.pending, (state) => {
+      .addCase(getUserProfile.pending, (state) => {
         state.loading = true;
       })
-      .add(getUserProfile.fulfilled, (state, action) => {
+      .addCase(getUserProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.userById = action.payload;
       })
-      .add(getUserProfile.rejected, (state, action) => {
+      .addCase(getUserProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(getUserProfileAdmin.pending, (state) => {
+      .addCase(getUserProfileAdmin.pending, (state) => {
         state.loading = true;
       })
-      .add(getUserProfileAdmin.fulfilled, (state, action) => {
+      .addCase(getUserProfileAdmin.fulfilled, (state, action) => {
         state.loading = false;
         state.userById = action.payload;
       })
-      .add(getUserProfileAdmin.rejected, (state, action) => {
+      .addCase(getUserProfileAdmin.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(getUsersAdmin.pending, (state) => {
+      .addCase(getUsersAdmin.pending, (state) => {
         state.loading = true;
       })
-      .add(getUsersAdmin.fulfilled, (state, action) => {
+      .addCase(getUsersAdmin.fulfilled, (state, action) => {
         state.loading = false;
         state.users = action.payload;
       })
-      .add(getUsersAdmin.rejected, (state, action) => {
+      .addCase(getUsersAdmin.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(updateUserInfo.pending, (state) => {
+      .addCase(updateUserInfo.pending, (state) => {
         state.loading = true;
       })
-      .add(updateUserInfo.fulfilled, (state, action) => {
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.userById = action.payload;
         toast.success("User information updated!", {theme: "colored"});
       })
-      .add(updateUserInfo.rejected, (state, action) => {
+      .addCase(updateUserInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(createUserProfile.pending, (state) => {
+      .addCase(createUserProfile.pending, (state) => {
         state.loading = true;
       })
-      .add(createUserProfile.fulfilled, (state, action) => {
+      .addCase(createUserProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.userById = action.payload;
         toast.success("Profile created.", {theme: "colored"});
       })
-      .add(createUserProfile.rejected, (state, action) => {
+      .addCase(createUserProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(updateUserProfile.pending, (state) => {
+      .addCase(updateUserProfile.pending, (state) => {
         state.loading = true;
       })
-      .add(updateUserProfile.fulfilled, (state, action) => {
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.userById = action.payload;
         toast.success("Profile updated.", {theme: "colored"});
       })
-      .add(updateUserProfile.rejected, (state, action) => {
+      .addCase(updateUserProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .add(updateUserAdmin.pending, (state) => {
+      .addCase(updateUserAdmin.pending, (state) => {
         state.loading = true;
       })
-      .add(updateUserAdmin.fulfilled, (state, action) => {
+      .addCase(updateUserAdmin.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.userById = action.payload;
       })
-      .add(updateUserAdmin.rejected, (state, action) => {
+      .addCase(updateUserAdmin.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

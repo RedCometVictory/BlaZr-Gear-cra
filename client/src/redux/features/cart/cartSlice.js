@@ -33,7 +33,7 @@ export const getCart = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to get cart.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -53,7 +53,7 @@ export const getCartGuest = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to get guest cart.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -75,7 +75,7 @@ export const resetCartOnProductDelete = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to reset guest cart.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -95,7 +95,7 @@ export const addItemToCart = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to add to cart.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -115,7 +115,7 @@ export const addItemToCartGuest = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to add to cart.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -135,7 +135,7 @@ export const updateItemInCart = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to add to cart.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -155,7 +155,7 @@ export const removeFromCart = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to remove item from cart.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -175,7 +175,7 @@ export const removeFromCartGuest = createAsyncThunk(
         err.message ||
         err.toString()
         toast.error("Failed to remove item from cart.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -194,7 +194,7 @@ export const shippingAddressForCart = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to set shipping address for cart.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -213,7 +213,7 @@ export const paymentMethodForCart = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to set payment method from cart.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -235,122 +235,122 @@ export const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .add(getCart.pending, (state) => {
+      .addCase(getCart.pending, (state) => {
         state.loading = true;
       })
-      .add(getCart.fulfilled, (state, action) => {
+      .addCase(getCart.fulfilled, (state, action) => {
         state.loading = false;
         state.cartItems = action.payload;
       })
-      .add(getCart.rejected, (state, action) => {
+      .addCase(getCart.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(getCartGuest.pending, (state) => {
+      .addCase(getCartGuest.pending, (state) => {
         state.loading = true;
       })
-      .add(getCartGuest.fulfilled, (state, action) => {
+      .addCase(getCartGuest.fulfilled, (state, action) => {
         state.loading = false;
         // state.cartItems = action.payload;
       })
-      .add(getCartGuest.rejected, (state, action) => {
+      .addCase(getCartGuest.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(resetCartOnProductDelete.pending, (state) => {
+      .addCase(resetCartOnProductDelete.pending, (state) => {
         state.loading = true;
       })
-      .add(resetCartOnProductDelete.fulfilled, (state, action) => {
+      .addCase(resetCartOnProductDelete.fulfilled, (state, action) => {
         state.loading = false;
         state.cartItems = action.payload;
       })
-      .add(resetCartOnProductDelete.rejected, (state, action) => {
+      .addCase(resetCartOnProductDelete.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(addItemToCart.pending, (state) => {
+      .addCase(addItemToCart.pending, (state) => {
         state.loading = true;
       })
-      .add(addItemToCart.fulfilled, (state, action) => {
+      .addCase(addItemToCart.fulfilled, (state, action) => {
         state.loading = false;
         state.cartItems = action.payload;
       })
-      .add(addItemToCart.rejected, (state, action) => {
+      .addCase(addItemToCart.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(addItemToCartGuest.pending, (state) => {
+      .addCase(addItemToCartGuest.pending, (state) => {
         state.loading = true;
       })
-      .add(addItemToCartGuest.fulfilled, (state, action) => {
+      .addCase(addItemToCartGuest.fulfilled, (state, action) => {
         state.loading = false;
         state.cartItems = action.payload;
       })
-      .add(addItemToCartGuest.rejected, (state, action) => {
+      .addCase(addItemToCartGuest.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(updateItemInCart.pending, (state) => {
+      .addCase(updateItemInCart.pending, (state) => {
         state.loading = true;
       })
-      .add(updateItemInCart.fulfilled, (state, action) => {
+      .addCase(updateItemInCart.fulfilled, (state, action) => {
         state.loading = false;
         state.cartItems = action.payload;
       })
-      .add(updateItemInCart.rejected, (state, action) => {
+      .addCase(updateItemInCart.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(removeFromCart.pending, (state) => {
+      .addCase(removeFromCart.pending, (state) => {
         state.loading = true;
       })
-      .add(removeFromCart.fulfilled, (state, action) => {
+      .addCase(removeFromCart.fulfilled, (state, action) => {
         state.loading = false;
         state.cartItems = action.payload;
       })
-      .add(removeFromCart.rejected, (state, action) => {
+      .addCase(removeFromCart.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(removeFromCartGuest.pending, (state) => {
+      .addCase(removeFromCartGuest.pending, (state) => {
         state.loading = true;
       })
-      .add(removeFromCartGuest.fulfilled, (state, action) => {
+      .addCase(removeFromCartGuest.fulfilled, (state, action) => {
         state.loading = false;
         state.cartItems = action.payload;
       })
-      .add(removeFromCartGuest.rejected, (state, action) => {
+      .addCase(removeFromCartGuest.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(shippingAddressForCart.pending, (state) => {
+      .addCase(shippingAddressForCart.pending, (state) => {
         state.loading = true;
       })
-      .add(shippingAddressForCart.fulfilled, (state, action) => {
+      .addCase(shippingAddressForCart.fulfilled, (state, action) => {
         state.loading = false;
         state.shippingAddress = action.payload;
       })
-      .add(shippingAddressForCart.rejected, (state, action) => {
+      .addCase(shippingAddressForCart.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(paymentMethodForCart.pending, (state) => {
+      .addCase(paymentMethodForCart.pending, (state) => {
         state.loading = true;
       })
-      .add(paymentMethodForCart.fulfilled, (state, action) => {
+      .addCase(paymentMethodForCart.fulfilled, (state, action) => {
         state.loading = false;
         state.paymentMethod = action.payload;
       })
-      .add(paymentMethodForCart.rejected, (state, action) => {
+      .addCase(paymentMethodForCart.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;

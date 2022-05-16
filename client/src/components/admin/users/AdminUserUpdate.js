@@ -38,7 +38,7 @@ const AdminUserUpdate = ({stateChanger}) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    dispatch(updateUserAdmin(user_id, formUserData))
+    dispatch(updateUserAdmin({user_id, formUserData}))
     stateChanger(false);
   }
 

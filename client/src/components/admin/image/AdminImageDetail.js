@@ -41,7 +41,7 @@ const AdminImageDetail = () => {
             <p>Are you sure you want to permanently delete this image? Image will no longer show in the shop or product details. Deleting cannot be reversed. Please confirm.</p>
           </div>
           <div className="admProductDetail__delete-btns">
-            <button className="btn btns del-primary" onClick={e => dispatch(deleteImage(image.id, navigate))}>Yes</button>
+            <button className="btn btns del-primary" onClick={e => dispatch(deleteImage({image: image.id, navigate}))}>Yes</button>
             <button className="btn btns del-secondary" onClick={() => setConfirmDelete(false)}>No</button>
           </div>
         </div>

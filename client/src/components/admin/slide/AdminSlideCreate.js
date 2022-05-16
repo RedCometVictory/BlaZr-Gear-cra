@@ -70,7 +70,7 @@ const AdminSlideCreate = () => {
   const onSubmit = e => {
     e.preventDefault();
     setUploadingImage(true);
-    dispatch(createSlide(formProductData, navigate));
+    dispatch(createSlide({slideForm: formProductData, navigate}));
   }
 
   return (

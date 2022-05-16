@@ -14,6 +14,7 @@ const listAllCategories = async () => {
 };
 
 const listAllProducts = async (keyword, category, pageNumber, itemsPerPage) => {
+  console.log("SERVICE- products all")
   const res = await api.get(`/products?keyword=${keyword}&category=${category}&pageNumber=${pageNumber}&offsetItems=${itemsPerPage}`);
   let result = res.data.data;
   return result;

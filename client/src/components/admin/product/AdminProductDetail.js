@@ -53,7 +53,7 @@ const AdminProductDetail = () => {
             <p>Are you sure you want to delete this product from the online store? Please confirm.</p>
           </div>
           <div className="admProductDetail__delete-btns">
-            <button className="btn btns del-primary" onClick={e => dispatch(deleteProduct(productById.productInfo.product_id, navigate))}>Yes</button>
+            <button className="btn btns del-primary" onClick={e => dispatch(deleteProduct({prod_id: productById.productInfo.product_id, navigate}))}>Yes</button>
             <button className="btn btns del-secondary" onClick={() => setConfirmDelete(false)}>No</button>
           </div>
         </div>

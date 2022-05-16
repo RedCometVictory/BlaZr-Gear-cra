@@ -14,7 +14,7 @@ const AdminOrders = () => {
   let [itemsPerPage, setItemsPerPage] = useState(12);
 
   useEffect(() => {
-    dispatch(getAllAdminOrders(currentPage, itemsPerPage));
+    dispatch(getAllAdminOrders({pageNumber: currentPage, itemsPerPage}));
   }, [dispatch, currentPage, itemsPerPage]);
 
   useEffect(() => {

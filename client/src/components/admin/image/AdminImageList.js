@@ -16,7 +16,7 @@ const AdminImageList = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    dispatch(getAllImages(currentPage, itemsPerPage));
+    dispatch(getAllImages({pageNumber: currentPage, itemsPerPage}));
   }, [dispatch, currentPage, itemsPerPage]);
 
   useEffect(() => {

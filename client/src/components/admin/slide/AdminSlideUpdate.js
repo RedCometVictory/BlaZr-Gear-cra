@@ -82,7 +82,7 @@ const AdminSlideUpdate = ({stateChanger}) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    dispatch(updateSlide(slide_id, formProductData, navigate));
+    dispatch(updateSlide({slide_id, formProductData, navigate}));
     fileInputText.current.value = ""; // upon submit clear field for image file upload
     stateChanger(false);
   }

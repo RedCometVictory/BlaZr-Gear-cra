@@ -37,7 +37,7 @@ const ProductDetail = () => {
 
   const addToCartHandler = () => {
     setAdded(true);
-    dispatch(addItemToCartGuest(prod_id, quantity));
+    dispatch(addItemToCartGuest({prod_id, quantity}));
   };
   const increaseQty = () => {
     if (quantity === initialQuantity) { return; }

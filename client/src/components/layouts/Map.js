@@ -171,7 +171,9 @@ const Map = () => {
         setFullName(fullname = fullName);
       }
     }
-    dispatch(shippingAddressForCart({ fullname, email, address, zipcode, city, state, country, lat, lng }));
+    let shippingAddress = { fullname, email, address, zipcode, city, state, country, lat, lng };
+    dispatch(shippingAddressForCart(shippingAddress));
+    // dispatch(shippingAddressForCart({ fullname, email, address, zipcode, city, state, country, lat, lng }));
     navigate('/confirm-order');
   }
 

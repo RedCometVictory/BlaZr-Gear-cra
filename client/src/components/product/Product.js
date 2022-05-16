@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import ProductItem from './ProductItem';
 import { listAllCategories, listAllProducts } from '../../redux/features/product/productSlice';
 import Paginate from '../layouts/Paginate';
@@ -8,9 +8,10 @@ import Spinner from '../layouts/Spinner';
 
 const Product = () => {
   const dispatch = useDispatch();
-  const { keyword } = useParams();
   const allProducts = useSelector(state => state.product);
   const { loading, categories, products, page, pages } = allProducts;
+  const [searchParams, setSearchParams] = useSearchParams();
+  let keyword = searchParams.get("keyword") || '';
   const [hasMounted, setHasMounted] = useState(false);
   let [currentPage, setCurrentPage] = useState(page || 1);
   const [itemsPerPage, setItemsPerPage] = useState(12);
@@ -20,12 +21,9 @@ const Product = () => {
   useEffect(() => {
     setIsLoading(true);
     dispatch(listAllCategories())
-      // .then(
-
-      // );
-      // .catch();
-    dispatch(listAllProducts(keyword, category !== 'All' ? category : '', currentPage, itemsPerPage));
-  }, [dispatch, keyword, category, currentPage, itemsPerPage]);
+    // dispatch(listAllProducts(keyword ? keyword : '', category !== 'All' ? category : '', currentPage, itemsPerPage));
+    dispatch(listAllProducts({keyword: keyword ? keyword : '', category: category !== 'All' ? category : '', currentPage, itemsPerPage}));
+  }, [dispatch, keyword, category, currentPage, itemsPerPage, searchParams]);
 
   useEffect(() => {
     setHasMounted(true);

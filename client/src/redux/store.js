@@ -1,19 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
 import setAuthToken from "../utils/setAuthToken";
-import alertReducer from "/features/alert";
-import authReducer from "/features/auth";
-import cartReducer from "/features/cart";
-import imageReducer from "/features/image";
-import orderReducer from "/features/order";
-import productReducer from "/features/product";
-import slideReducer from "/features/slide";
-import stripeReducer from "/features/stripe";
-import userReducer from "/features/user";
 
-const store = configureStore({
+// import alertReducer from "/features/alert";
+import authReducer from "./features/auth/authSlice";
+import cartReducer from "./features/cart/cartSlice";
+import imageReducer from "./features/image/imageSlice";
+import orderReducer from "./features/order/orderSlice";
+import productReducer from "./features/product/productSlice";
+import slideReducer from "./features/slide/slideSlice";
+import stripeReducer from "./features/stripe/stripeSlice";
+import userReducer from "./features/user/userSlice";
+
+// export default store = configureStore({
 // export const store = configureStore({
+const store = configureStore({
   reducer: {
-    alert: alertReducer,
+    // alert: alertReducer,
     auth: authReducer,
     cart: cartReducer,
     image: imageReducer,

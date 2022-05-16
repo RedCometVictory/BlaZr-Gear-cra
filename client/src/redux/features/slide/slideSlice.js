@@ -22,7 +22,7 @@ export const getAllSlides = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to retrieve slideshow.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -41,7 +41,7 @@ export const getSlideDetails = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list slide details.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -60,7 +60,7 @@ export const createSlide = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to create slide.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -79,7 +79,7 @@ export const updateSlide = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to update slide.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -98,7 +98,7 @@ export const deleteSlide = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to delete slide.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -112,63 +112,63 @@ export const slideSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .add(getAllSlides.pending, (state) => {
+      .addCase(getAllSlides.pending, (state) => {
         state.loading = true;
       })
-      .add(getAllSlides.fulfilled, (state, action) => {
+      .addCase(getAllSlides.fulfilled, (state, action) => {
         state.loading = false;
         state.slides = action.payload;
       })
-      .add(getAllSlides.rejected, (state, action) => {
+      .addCase(getAllSlides.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(getSlideDetails.pending, (state) => {
+      .addCase(getSlideDetails.pending, (state) => {
         state.loading = true;
       })
-      .add(getSlideDetails.fulfilled, (state, action) => {
+      .addCase(getSlideDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.slide = action.payload;
       })
-      .add(getSlideDetails.rejected, (state, action) => {
+      .addCase(getSlideDetails.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(createSlide.pending, (state) => {
+      .addCase(createSlide.pending, (state) => {
         state.loading = true;
       })
-      .add(createSlide.fulfilled, (state, action) => {
+      .addCase(createSlide.fulfilled, (state, action) => {
         state.loading = false;
         toast.success("Created slide.", {theme: "colored"});
       })
-      .add(createSlide.rejected, (state, action) => {
+      .addCase(createSlide.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(updateSlide.pending, (state) => {
+      .addCase(updateSlide.pending, (state) => {
         state.loading = true;
       })
-      .add(updateSlide.fulfilled, (state, action) => {
+      .addCase(updateSlide.fulfilled, (state, action) => {
         state.loading = false;
         state.slide = action.payload;
         toast.success("Updated slide.", {theme: "colored"});
       })
-      .add(updateSlide.rejected, (state, action) => {
+      .addCase(updateSlide.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(deleteSlide.pending, (state) => {
+      .addCase(deleteSlide.pending, (state) => {
         state.loading = true;
       })
-      .add(deleteSlide.fulfilled, (state, action) => {
+      .addCase(deleteSlide.fulfilled, (state, action) => {
         state.loading = false;
         toast.success("Deleted slide.", {theme: "colored"});
       })
-      .add(deleteSlide.rejected, (state, action) => {
+      .addCase(deleteSlide.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;

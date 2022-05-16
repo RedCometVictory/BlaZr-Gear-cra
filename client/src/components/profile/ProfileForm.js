@@ -46,7 +46,9 @@ const ProfileUserForm = ({stateChanger}) => {
     if (userById.userData.f_name && userById.userData.l_name) {
       let fullname = `${userById.userData.f_name} ${userById.userData.l_name}`;
       let email = userById.userData.user_email;
-      dispatch(shippingAddressForCart({ fullname, email,address, zipcode, city, state, country }));
+      let shippingAddress = { fullname, email, address, zipcode, city, state, country };
+      // dispatch(shippingAddressForCart({ fullname, email,address, zipcode, city, state, country }));
+      dispatch(shippingAddressForCart(shippingAddress));
     };
     dispatch(createUserProfile(formUserData));
     stateChanger(false);
@@ -58,7 +60,8 @@ const ProfileUserForm = ({stateChanger}) => {
     if (userById.userData.f_name && userById.userData.l_name) {
       let fullname = `${userById.userData.f_name} ${userById.userData.l_name}`;
       let email = userById.userData.user_email;
-      dispatch(shippingAddressForCart({ fullname, email,address, zipcode, city, state, country }));
+      let shippingAddress = { fullname, email, address, zipcode, city, state, country };
+      dispatch(shippingAddressForCart(shippingAddress));
     };
     
     dispatch(updateUserProfile(formUserData));

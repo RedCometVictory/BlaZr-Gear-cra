@@ -4,9 +4,11 @@ import store from '../redux/store';
 import { logout, refreshAccessToken } from '../redux/features/auth/authSlice';
 
 const api = Axios.create({
-  // baseURL: 'http://localhost:5000/api',
+  // development
+  baseURL: 'http://localhost:5000/api',
   // baseURL: `${process.env.HEROKU_DOMAIN}/api`,
-  baseURL: `https://blazrgear.herokuapp.com/api`,
+  // production
+  // baseURL: `https://blazrgear.herokuapp.com/api`,
   // timeout:5000,
   timeout:25000,
   // 'Content-Type': 'multipart/form-data'
@@ -47,7 +49,7 @@ api.interceptors.response.use(
 
     if (response?.status === 401 && originalRequest.url.includes("auth/refresh-token")) {
       // stop loop
-      store.dispatch(logout(null, history));
+      store.dispatch(logout({navigate: null, history}));
       return Promise.reject(error);
     }
     if (response?.status === 401 && !originalRequest._retry) {

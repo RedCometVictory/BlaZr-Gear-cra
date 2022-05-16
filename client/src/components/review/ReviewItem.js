@@ -26,7 +26,7 @@ const ReviewItem = ({ review }) => {
     e.preventDefault();
     let formData = {...editFormData, rating};
     
-    dispatch(updateProductReview(review.product_id, review.id, formData));
+    dispatch(updateProductReview({prod_id: review.product_id, review_id: review.id, formData}));
     setEditFormData({ title: '', description: '' });
     setRating(1);
   };
@@ -71,7 +71,7 @@ const ReviewItem = ({ review }) => {
           <div className="review__delete-confirm">
             <div>Are you sure?</div>
             <div className="review__delete-btns">
-              <button className="btns del-primary" onClick={e => dispatch(deleteProductReview(review.product_id, review.id))}>Yes</button>
+              <button className="btns del-primary" onClick={e => dispatch(deleteProductReview({prod_id: review.product_id, review_id: review.id}))}>Yes</button>
               <button className="btns del-secondary" onClick={() => isSetConfirmDelete(false)}>No</button>
             </div>
           </div>

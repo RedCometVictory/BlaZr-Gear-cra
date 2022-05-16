@@ -81,12 +81,14 @@ const Shipping = () => {
       }
     }
 
-    dispatch(shippingAddressForCart({ fullname, email, address, zipcode, city, state, country, lat, lng }));
+    // dispatch(shippingAddressForCart({ fullname, email, address, zipcode, city, state, country, lat, lng }));
+    let shippingAddress = { fullname, email, address, zipcode, city, state, country, lat, lng };
+    dispatch(shippingAddressForCart(shippingAddress));
     navigate('/confirm-order');
   };
 
   const chooseMapLocation = () => {
-    dispatch(shippingAddressForCart({ fullname, email, address, zipcode, city, state, country, lat, lng }));
+    dispatch(shippingAddressForCart(shippingAddress));
     navigate('/map');
   }
 

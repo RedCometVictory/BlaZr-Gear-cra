@@ -24,7 +24,7 @@ export const loadUser = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to retrieve user info.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -43,7 +43,7 @@ export const registerUser = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to register.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -62,7 +62,7 @@ export const loginUser = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to login. Incorrect email or password.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -80,7 +80,7 @@ export const logout = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -104,7 +104,7 @@ export const deleteUser = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to delete account.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -123,7 +123,7 @@ export const forgotPassword = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to send reset link. Check email address and try again.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -131,7 +131,7 @@ export const forgotPassword = createAsyncThunk(
 
 export const verifyPassword = createAsyncThunk(
   'auth/verifyPassword',
-  async ({token, email}, thunkAPI) => {
+  async ({token, email, navigate}, thunkAPI) => {
     try {
       return await authService.verifyPassword(token, email);
     } catch (err) {
@@ -142,7 +142,7 @@ export const verifyPassword = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Reset link invalid. Please try password reset again.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -161,7 +161,7 @@ export const resetPassword = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to reset password. Please try password reset again.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -181,7 +181,7 @@ export const refreshAccessToken = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to refresh token.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -206,136 +206,136 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .add(loadUser.pending, (state) => {
+      .addCase(loadUser.pending, (state) => {
         state.loading = true;
       })
-      .add(loadUser.fulfilled, (state, action) => {
+      .addCase(loadUser.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
         state.userInfo = action.payload.userInfo;
       })
-      .add(loadUser.rejected, (state, action) => {
+      .addCase(loadUser.rejected, (state, action) => {
         state.loading = false;
         state.isAuthenticated = false;
         state.userInfo = null;
         // state.error = action.payload;
         state.error = true;
       })
-      .add(registerUser.pending, (state) => {
+      .addCase(registerUser.pending, (state) => {
         state.loading = true;
       })
-      .add(registerUser.fulfilled, (state, action) => {
+      .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
         state.userInfo = action.payload.userInfo;
         toast.success("Successfully registered. Welcome.", {theme: "colored"});
       })
-      .add(registerUser.rejected, (state, action) => {
+      .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.isAuthenticated = false;
         state.userInfo = null;
         state.error = true;
       })
-      .add(loginUser.pending, (state) => {
+      .addCase(loginUser.pending, (state) => {
         state.loading = true;
       })
-      .add(loginUser.fulfilled, (state, action) => {
+      .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
         state.userInfo = action.payload.userInfo;
         toast.success("Welcome!", {theme: "colored"});
       })
-      .add(loginUser.rejected, (state, action) => {
+      .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.isAuthenticated = false;
         state.userInfo = null;
         state.error = true;
       })
-      .add(logout.pending, (state) => {
+      .addCase(logout.pending, (state) => {
         state.loading = true;
       })
-      .add(logout.fulfilled, (state, action) => {
+      .addCase(logout.fulfilled, (state, action) => {
         state.token = null;
         state.loading = false;
         state.isAuthenticated = false;
         toast.success("Logout successful.", {theme: "colored"});
         state.userInfo = null;
       })
-      .add(logout.rejected, (state, action) => {
+      .addCase(logout.rejected, (state, action) => {
         state.loading = false;
         state.isAuthenticated = false;
         state.userInfo = null;
         state.error = true;
       })
-      .add(deleteUser.pending, (state) => {
+      .addCase(deleteUser.pending, (state) => {
         state.loading = true;
       })
-      .add(deleteUser.fulfilled, (state, action) => {
+      .addCase(deleteUser.fulfilled, (state, action) => {
         state.token = null;
         state.loading = false;
         state.isAuthenticated = false;
         state.userInfo = null;
         toast.success("Your account has been deleted.", {theme: "colored"});
       })
-      .add(deleteUser.rejected, (state, action) => {
+      .addCase(deleteUser.rejected, (state, action) => {
         state.loading = false;
         state.isAuthenticated = false;
         state.userInfo = null;
         state.error = true;
       })
-      .add(forgotPassword.pending, (state) => {
+      .addCase(forgotPassword.pending, (state) => {
         state.loading = true;
       })
-      .add(forgotPassword.fulfilled, (state, action) => {
+      .addCase(forgotPassword.fulfilled, (state, action) => {
         state.status = action.payload;
         state.loading = false;
         state.allowReset = false;
         // state.userInfo = null;
         toast.success("Password reset link sent to your email.", {theme: "colored"});
       })
-      .add(forgotPassword.rejected, (state, action) => {
+      .addCase(forgotPassword.rejected, (state, action) => {
         state.loading = false;
         state.allowReset = false;
         state.error = action.payload;
       })
-      .add(verifyPassword.pending, (state) => {
+      .addCase(verifyPassword.pending, (state) => {
         state.loading = true;
       })
-      .add(verifyPassword.fulfilled, (state, action) => {
+      .addCase(verifyPassword.fulfilled, (state, action) => {
         state.status = action.payload.status;
         state.loading = false;
         state.allowReset = true;
         // state.userInfo = null;
         toast.success("Reset link valid.", {theme: "colored"});
       })
-      .add(verifyPassword.rejected, (state, action) => {
+      .addCase(verifyPassword.rejected, (state, action) => {
         state.loading = false;
         state.allowReset = false;
         state.error = action.payload;
       })
-      .add(resetPassword.pending, (state) => {
+      .addCase(resetPassword.pending, (state) => {
         state.loading = true;
       })
-      .add(resetPassword.fulfilled, (state, action) => {
+      .addCase(resetPassword.fulfilled, (state, action) => {
         state.status = action.payload.status;
         state.loading = false;
         state.allowReset = false;
         // state.userInfo = null;
         toast.success("Password reset. Please login using new password.", {theme: "colored"});
       })
-      .add(resetPassword.rejected, (state, action) => {
+      .addCase(resetPassword.rejected, (state, action) => {
         state.loading = false;
         state.allowReset = false;
         state.error = action.payload;
       })
-      .add(refreshAccessToken.pending, (state) => {
+      .addCase(refreshAccessToken.pending, (state) => {
         state.loading = true;
       })
-      .add(refreshAccessToken.fulfilled, (state, action) => {
+      .addCase(refreshAccessToken.fulfilled, (state, action) => {
         state.token = action.payload;
         state.loading = false;
       })
-      .add(refreshAccessToken.rejected, (state, action) => {
+      .addCase(refreshAccessToken.rejected, (state, action) => {
         state.loading = false;
         state.allowReset = false;
         state.error = action.payload;

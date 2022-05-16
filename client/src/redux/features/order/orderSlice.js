@@ -24,7 +24,7 @@ export const createOrder = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to create order.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -43,7 +43,7 @@ export const getAllUserOrders = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list orders.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -62,7 +62,7 @@ export const getAllAdminOrders = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list orders.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -81,7 +81,7 @@ export const getOrderDetails = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list order.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -100,7 +100,7 @@ export const getOrderDetailAdmin = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list order.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -119,7 +119,7 @@ export const payOrder = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to pay order.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -138,7 +138,7 @@ export const updateOrderStatusToShipped = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to change shipping status of order.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -157,7 +157,7 @@ export const deliverOrder = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to change delivery status of order.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -176,7 +176,7 @@ export const refundOrder = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to change order status to refund.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -196,7 +196,7 @@ export const refundPayPalOrder = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to change order status to refund.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -215,7 +215,7 @@ export const deleteOrder = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to delete order.", {theme: "colored"});
-      toast.error(message, {theme: "colored"});
+      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -229,75 +229,75 @@ export const orderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .add(createOrder.pending, (state) => {
+      .addCase(createOrder.pending, (state) => {
         state.loading = true;
       })
-      .add(createOrder.fulfilled, (state, action) => {
+      .addCase(createOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.order = action.payload;
       })
-      .add(createOrder.rejected, (state, action) => {
+      .addCase(createOrder.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(getAllUserOrders.pending, (state) => {
+      .addCase(getAllUserOrders.pending, (state) => {
         state.loading = true;
       })
-      .add(getAllUserOrders.fulfilled, (state, action) => {
+      .addCase(getAllUserOrders.fulfilled, (state, action) => {
         state.loading = false;
         state.orders = action.payload.orderItems;
         state.pages = action.payload.pages;
         state.page = action.payload.page;
       })
-      .add(getAllUserOrders.rejected, (state, action) => {
+      .addCase(getAllUserOrders.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(getAllAdminOrders.pending, (state) => {
+      .addCase(getAllAdminOrders.pending, (state) => {
         state.loading = true;
       })
-      .add(getAllAdminOrders.fulfilled, (state, action) => {
+      .addCase(getAllAdminOrders.fulfilled, (state, action) => {
         state.loading = false;
         state.orders = action.payload.orderItems;
         state.pages = action.payload.pages;
         state.page = action.payload.page;
       })
-      .add(getAllAdminOrders.rejected, (state, action) => {
+      .addCase(getAllAdminOrders.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(getOrderDetails.pending, (state) => {
+      .addCase(getOrderDetails.pending, (state) => {
         state.loading = true;
       })
-      .add(getOrderDetails.fulfilled, (state, action) => {
+      .addCase(getOrderDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.order = action.payload.userOrder;
       })
-      .add(getOrderDetails.rejected, (state, action) => {
+      .addCase(getOrderDetails.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(getOrderDetailAdmin.pending, (state) => {
+      .addCase(getOrderDetailAdmin.pending, (state) => {
         state.loading = true;
       })
-      .add(getOrderDetailAdmin.fulfilled, (state, action) => {
+      .addCase(getOrderDetailAdmin.fulfilled, (state, action) => {
         state.loading = false;
         state.order = action.payload.userOrder;
       })
-      .add(getOrderDetailAdmin.rejected, (state, action) => {
+      .addCase(getOrderDetailAdmin.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(payOrder.pending, (state) => {
+      .addCase(payOrder.pending, (state) => {
         state.loading = true;
       })
-      .add(payOrder.fulfilled, (state, action) => {
+      .addCase(payOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.order = {
@@ -306,15 +306,15 @@ export const orderSlice = createSlice({
           userInfo: {...state.order.userInfo}
         };
       })
-      .add(payOrder.rejected, (state, action) => {
+      .addCase(payOrder.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(updateOrderStatusToShipped.pending, (state) => {
+      .addCase(updateOrderStatusToShipped.pending, (state) => {
         state.loading = true;
       })
-      .add(updateOrderStatusToShipped.fulfilled, (state, action) => {
+      .addCase(updateOrderStatusToShipped.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.order = {
@@ -324,15 +324,15 @@ export const orderSlice = createSlice({
         };
         toast.success("Order has been shipped.", {theme: "colored"});
       })
-      .add(updateOrderStatusToShipped.rejected, (state, action) => {
+      .addCase(updateOrderStatusToShipped.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(deliverOrder.pending, (state) => {
+      .addCase(deliverOrder.pending, (state) => {
         state.loading = true;
       })
-      .add(deliverOrder.fulfilled, (state, action) => {
+      .addCase(deliverOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.order = {
@@ -342,15 +342,15 @@ export const orderSlice = createSlice({
         };
         toast.success("Order delivered.", {theme: "colored"});
       })
-      .add(deliverOrder.rejected, (state, action) => {
+      .addCase(deliverOrder.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(refundOrder.pending, (state) => {
+      .addCase(refundOrder.pending, (state) => {
         state.loading = true;
       })
-      .add(refundOrder.fulfilled, (state, action) => {
+      .addCase(refundOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.order = {
@@ -360,15 +360,15 @@ export const orderSlice = createSlice({
         };
         toast.success("Order deleted.", {theme: "colored"});
       })
-      .add(refundOrder.rejected, (state, action) => {
+      .addCase(refundOrder.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(refundPayPalOrder.pending, (state) => {
+      .addCase(refundPayPalOrder.pending, (state) => {
         state.loading = true;
       })
-      .add(refundPayPalOrder.fulfilled, (state, action) => {
+      .addCase(refundPayPalOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.order = {
@@ -378,19 +378,19 @@ export const orderSlice = createSlice({
         };
         toast.success("Order refunded.", {theme: "colored"});
       })
-      .add(refundPayPalOrder.rejected, (state, action) => {
+      .addCase(refundPayPalOrder.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;
       })
-      .add(deleteOrder.pending, (state) => {
+      .addCase(deleteOrder.pending, (state) => {
         state.loading = true;
       })
-      .add(deleteOrder.fulfilled, (state, action) => {
+      .addCase(deleteOrder.fulfilled, (state, action) => {
         state.loading = false;
         toast.success("Order deleted.", {theme: "colored"});
       })
-      .add(deleteOrder.rejected, (state, action) => {
+      .addCase(deleteOrder.rejected, (state, action) => {
         state.loading = false;
         // state.cartItems = null;
         state.error = action.payload;

@@ -84,7 +84,7 @@ const AdminProductUpdate = ({stateChanger}) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    dispatch(updateProduct(prod_id, formProductData, navigate));
+    dispatch(updateProduct({prod_id, formProductData, navigate}));
     fileInputText.current.value = ""; // upon submit clear field for image file upload
     stateChanger(false);
   }

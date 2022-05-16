@@ -89,8 +89,7 @@ const Landing = () => {
     )
   };
 
-  return (
-    <>
+  return (<>
     <section className="hero">
       <div className="hero__content">
         <div className="hero__slides">
@@ -136,6 +135,6 @@ const Landing = () => {
       )}
     </main>
     </>
-  );
+  );  
 };
 export default Landing;

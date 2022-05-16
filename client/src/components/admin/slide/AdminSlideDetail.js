@@ -56,7 +56,7 @@ const AdminSlideDetail = () => {
             <p>Are you sure you want to delete this slide from the slideshow? Please confirm.</p>
           </div>
           <div className="admProductDetail__delete-btns">
-            <button className="btn btns del-primary" onClick={e => dispatch(deleteSlide(slide.id, navigate))}>Yes</button>
+            <button className="btn btns del-primary" onClick={e => dispatch(deleteSlide({slide_id: slide.id, navigate}))}>Yes</button>
             <button className="btn btns del-secondary" onClick={() => setConfirmDelete(false)}>No</button>
           </div>
         </div>
