@@ -45,8 +45,8 @@ const addItemToCart = async (prod_id, qty, currCartItems) => {
 
 const addItemToCartGuest = async (prod_id, qty, currCartItems) => {
   const res = await api.get(`/products/${prod_id}`);
-  let result = res.data.data.productInfo;
-  const item = {result, qty};
+  let product = res.data.data.productInfo;
+  const item = {product, qty};
   const existItem = currCartItems.find(i => i.product.id === item.product.id);
   if (existItem) {
     currCartItems = currCartItems.map(i => i.product.id === existItem.product.id ? item : i);
@@ -79,14 +79,15 @@ const updateItemInCart = async (prod_id, cartQty, currCartItems) => {
 const removeFromCart = async (currCartItems) => {
   const res = await api.delete(`/cart/delete`);
   let result = res.data.data;
-  currCartItems.filter(i => i.product.id !== result);
+  let final;
+  final = currCartItems.filter(i => i.product.id !== result);
   localStorage.setItem('__cart', JSON.stringify(result));
-  return result;
+  return final;
 };
 
 const removeFromCartGuest = async (prod_id, currCartItems) => {
-  let result = prod_id;
-  currCartItems.filter(i => i.product.id !== result);
+  let result;
+  result = currCartItems.filter(i => i.product.id !== prod_id);
   localStorage.setItem('__cart', JSON.stringify(result));
   return result;
 };
@@ -97,7 +98,7 @@ const shippingAddressForCart = async (shippingAddress) => {
 };
 
 const paymentMethodForCart = async (formData) => {
-  localStorage.setItem("__paymentMethod", formData);
+  localStorage.setItem("__paymentMethod", JSON.stringify(formData));
   return formData;
 };
 

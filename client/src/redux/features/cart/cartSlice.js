@@ -2,15 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import cartService from "./cartService";
 
-// const setAlert = (msg, alertType, timeout = 6000) => {
-//   const id = uuidv4();
-  
-// };
-// const alertService = {
-//   setAlert,
-//   removeAlert
-// }
-// export default alertService;
 const initialState = {
   cartItems: localStorage.getItem('__cart') ? JSON.parse(localStorage.getItem('__cart')) : [],
   paymentMethod: localStorage.getItem('__paymentMethod') ? JSON.parse(localStorage.getItem('__paymentMethod')) : null,
@@ -20,6 +11,12 @@ const initialState = {
   error: []
 };
 
+let getCartToastId = "getCartToastId";
+let resetCartToastId = "resetCartToastId";
+let addCartToastId = "addCartToastId";
+let removeCartToastId = "removeCartToastId";
+
+// * works
 export const getCart = createAsyncThunk(
   'cart/get/all',
   async (_, thunkAPI) => {
@@ -32,13 +29,14 @@ export const getCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to get cart.", {theme: "colored"});
+      toast.error("Failed to get cart.", {theme: "colored", toastId: getCartToastId});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const getCartGuest = createAsyncThunk(
   'cart/get/all/guest',
   async (_, thunkAPI) => {
@@ -52,13 +50,14 @@ export const getCartGuest = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to get guest cart.", {theme: "colored"});
+      toast.error("Failed to get guest cart.", {theme: "colored", toastId: getCartToastId});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const resetCartOnProductDelete = createAsyncThunk(
   'cart/resetCart/productDelete',
   async (match, thunkAPI) => {
@@ -74,13 +73,14 @@ export const resetCartOnProductDelete = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to reset guest cart.", {theme: "colored"});
+      toast.error("Failed to reset guest cart.", {theme: "colored", toastId: resetCartToastId});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const addItemToCart = createAsyncThunk(
   'cart/item/add',
   async ({prod_id, qty}, thunkAPI) => {
@@ -94,13 +94,14 @@ export const addItemToCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to add to cart.", {theme: "colored"});
+      toast.error("Failed to add to cart.", {theme: "colored", toastId: addCartToastId});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const addItemToCartGuest = createAsyncThunk(
   'cart/item/add/guest',
   async ({prod_id, qty}, thunkAPI) => {
@@ -114,13 +115,14 @@ export const addItemToCartGuest = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to add to cart.", {theme: "colored"});
+      toast.error("Failed to add to cart.", {theme: "colored", toastId: addCartToastId});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const updateItemInCart = createAsyncThunk(
   'cart/item/update',
   async ({prod_id, cartQty}, thunkAPI) => {
@@ -134,13 +136,14 @@ export const updateItemInCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to add to cart.", {theme: "colored"});
+      toast.error("Failed to add to cart.", {theme: "colored", toastId: addCartToastId});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const removeFromCart = createAsyncThunk(
   'cart/item/remove',
   async (_, thunkAPI) => {
@@ -154,13 +157,14 @@ export const removeFromCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to remove item from cart.", {theme: "colored"});
+      toast.error("Failed to remove item from cart.", {theme: "colored", toastId: removeCartToastId});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const removeFromCartGuest = createAsyncThunk(
   'cart/item/remove/guest',
   async (prod_id, thunkAPI) => {
@@ -174,13 +178,14 @@ export const removeFromCartGuest = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-        toast.error("Failed to remove item from cart.", {theme: "colored"});
+        toast.error("Failed to remove item from cart.", {theme: "colored", toastId: removeCartToastId});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const shippingAddressForCart = createAsyncThunk(
   'cart/shippingAddress/add',
   async (shippingAddress, thunkAPI) => {
@@ -193,13 +198,14 @@ export const shippingAddressForCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to set shipping address for cart.", {theme: "colored"});
+      toast.error("Failed to set shipping address for cart.", {theme: "colored", toastId: "shippingCartToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const paymentMethodForCart = createAsyncThunk(
   'cart/paymentMethod/add',
   async (formData, thunkAPI) => {
@@ -212,7 +218,7 @@ export const paymentMethodForCart = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to set payment method from cart.", {theme: "colored"});
+      toast.error("Failed to set payment method from cart.", {theme: "colored", toastId: "paymentMethodCartToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
@@ -225,9 +231,9 @@ export const cartSlice = createSlice({
   reducers: {
     cartReset: (state) => initialState,
     clearCart: (state) => {
-      localStorage.removeItem('__cart')
-      localStorage.removeItem('__shippingAddress')
-      localStorage.removeItem('__paymentMethod')
+      // localStorage.removeItem('__cart')
+      // localStorage.removeItem('__shippingAddress')
+      // localStorage.removeItem('__paymentMethod')
       state.cartItems = []
       state.shippingAddress = {}
       state.paymentMethod = null
@@ -284,7 +290,8 @@ export const cartSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(addItemToCartGuest.pending, (state) => {
-        state.loading = true;
+        state.loading = false;
+      //   state.loading = true;
       })
       .addCase(addItemToCartGuest.fulfilled, (state, action) => {
         state.loading = false;
@@ -320,7 +327,8 @@ export const cartSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(removeFromCartGuest.pending, (state) => {
-        state.loading = true;
+        state.loading = false;
+        // state.loading = true;
       })
       .addCase(removeFromCartGuest.fulfilled, (state, action) => {
         state.loading = false;

@@ -100,7 +100,7 @@ const Map = () => {
       setLng(result.center[0]);
       setPin(pin = coords);
     } else {
-      toast.warn('Please search using zipcode or by street address', {theme: 'colored'});
+      toast.warn('Please search using zipcode or by street address', {theme: 'colored', toastId: "mapToastId"});
     }
   };
 

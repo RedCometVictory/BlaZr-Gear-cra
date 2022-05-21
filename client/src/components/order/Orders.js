@@ -14,7 +14,7 @@ const Orders = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
 
   useEffect(() => {
-    dispatch(getAllUserOrders({currentPage, itemsPerPage}));
+    dispatch(getAllUserOrders({pageNumber: currentPage, itemsPerPage}));
   }, [dispatch, currentPage, itemsPerPage]);
 
   useEffect(() => {

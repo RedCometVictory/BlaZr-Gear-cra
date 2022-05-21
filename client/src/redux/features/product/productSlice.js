@@ -13,7 +13,7 @@ const initialState = {
   loading: true,
   error: []
 }
-
+// * wokrs
 export const getAllProductIds = createAsyncThunk(
   'product/getAll/byId',
   async (_, thunkAPI) => {
@@ -26,13 +26,14 @@ export const getAllProductIds = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to list product ids.", {theme: "colored"});
+      toast.error("Failed to list product ids.", {theme: "colored", toastId: "getProdByIdToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const listAllCategories = createAsyncThunk(
   'product/list/category/all',
   async (_, thunkAPI) => {
@@ -45,26 +46,18 @@ export const listAllCategories = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to list categories.", {theme: "colored"});
+      toast.error("Failed to list categories.", {theme: "colored", toastId: "listAllCategoryToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const listAllProducts = createAsyncThunk(
   'product/getAll',
   async ({keyword, category = '', pageNumber, itemsPerPage}, thunkAPI) => {
     try {
-      console.log("fetching all products")
-      console.log("keyword")
-      console.log(keyword)
-      console.log("category")
-      console.log(category)
-      console.log("pageNumber")
-      console.log(pageNumber)
-      console.log("itemsPerPage")
-      console.log(itemsPerPage)
       return await productService.listAllProducts(keyword, category, pageNumber, itemsPerPage);
     } catch (err) {
       const message =
@@ -73,13 +66,14 @@ export const listAllProducts = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to list all products.", {theme: "colored"});
+      toast.error("Failed to list all products.", {theme: "colored", toastId: "listAllProdToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const listTopProducts = createAsyncThunk(
   'product/list/all',
   async (_, thunkAPI) => {
@@ -92,13 +86,14 @@ export const listTopProducts = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to list top products.", {theme: "colored"});
+      toast.error("Failed to list top products.", {theme: "colored", toastId: "getTopProdToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const listProductDetails = createAsyncThunk(
   'product/list/details',
   async (prod_id, thunkAPI) => {
@@ -111,13 +106,14 @@ export const listProductDetails = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to list product details.", {theme: "colored"});
+      toast.error("Failed to list product details.", {theme: "colored", toastId: "listProdDetailToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const createProduct = createAsyncThunk(
   'product/create',
   async ({productForm, navigate}, thunkAPI) => {
@@ -130,13 +126,14 @@ export const createProduct = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to create product.", {theme: "colored"});
+      toast.error("Failed to create product.", {theme: "colored", toastId: "createProdToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * owkrs
 export const createProductReview = createAsyncThunk(
   'product/review/create',
   async ({prod_id, reviewForm}, thunkAPI) => {
@@ -150,13 +147,14 @@ export const createProductReview = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Your review already exists.", {theme: "colored"});
+      toast.error("Your review already exists.", {theme: "colored", toastId: "createProdRevToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const updateProductReview = createAsyncThunk(
   'product/review/update',
   async ({prod_id, review_id, reviewForm}, thunkAPI) => {
@@ -170,13 +168,14 @@ export const updateProductReview = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to update product review.", {theme: "colored"});
+      toast.error("Failed to update product review.", {theme: "colored", toastId: "updateProdRevToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const deleteProductReview = createAsyncThunk(
   'product/review/delete',
   async ({prod_id, review_id}, thunkAPI) => {
@@ -190,17 +189,21 @@ export const deleteProductReview = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to delete product review.", {theme: "colored"});
+      toast.error("Failed to delete product review.", {theme: "colored", toastId: "deleteProdRevToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const updateProduct = createAsyncThunk(
   'product/update',
-  async ({prod_id, productForm, navigate}, thunkAPI) => {
+  async ({prod_id, productForm}, thunkAPI) => {
     try {
+      console.log("attempting to update product - SLICE")
+      console.log(prod_id)
+      console.log(productForm)
       let currProductById = thunkAPI.getState().product.productById;
       return await productService.updateProduct(prod_id, productForm, currProductById);
     } catch (err) {
@@ -210,17 +213,20 @@ export const updateProduct = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to update product.", {theme: "colored"});
+      toast.error("Failed to update product.", {theme: "colored", toastId: "updateProdToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const deleteProduct = createAsyncThunk(
   'product/delete',
   async ({prod_id, navigate}, thunkAPI) => {
     try {
+      console.log("deleting product")
+      console.log(prod_id)
       return await productService.deleteProduct(prod_id, navigate);
     } catch (err) {
       const message =
@@ -229,7 +235,7 @@ export const deleteProduct = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to delete product.", {theme: "colored"});
+      toast.error("Failed to delete product.", {theme: "colored", toastId: "deleteProdToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
@@ -311,7 +317,7 @@ export const productSlice = createSlice({
       })
       .addCase(createProduct.fulfilled, (state, action) => {
         state.loading = false;
-        toast.success("Created product!", {theme: "colored"});
+        toast.success("Created product!", {theme: "colored", toastId: "createProdToastId"});
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
@@ -324,7 +330,7 @@ export const productSlice = createSlice({
       .addCase(createProductReview.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.productById = action.payload;
+        state.productById.productReviews = action.payload;
       })
       .addCase(createProductReview.rejected, (state, action) => {
         state.loading = false;
@@ -337,7 +343,7 @@ export const productSlice = createSlice({
       .addCase(updateProductReview.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.productById = action.payload;
+        state.productById.productReviews = action.payload;
       })
       .addCase(updateProductReview.rejected, (state, action) => {
         state.loading = false;
@@ -350,8 +356,8 @@ export const productSlice = createSlice({
       .addCase(deleteProductReview.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.productById = action.payload;
-        toast.success("Product review removed!", {theme: "colored"});
+        state.productById.productReviews = action.payload;
+        toast.success("Product review removed!", {theme: "colored", toastId: "prodReviewRemovedToastId"});
       })
       .addCase(deleteProductReview.rejected, (state, action) => {
         state.loading = false;
@@ -364,7 +370,7 @@ export const productSlice = createSlice({
       .addCase(updateProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.productById = action.payload;
+        state.productById.productInfo = action.payload;
       })
       .addCase(updateProduct.rejected, (state, action) => {
         state.loading = false;
@@ -375,8 +381,8 @@ export const productSlice = createSlice({
         state.loading = true;
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
-        state.loading = false;
-        toast.success("Deleted product.", {theme: "colored"});
+        state.loading = true;
+        toast.success("Deleted product.", {theme: "colored", toastId: "deleteProdToastId"});
       })
       .addCase(deleteProduct.rejected, (state, action) => {
         state.loading = false;

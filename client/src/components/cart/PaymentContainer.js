@@ -12,6 +12,8 @@ const PaymentContainer = () => {
     let getStripeApiKey = async () => {
       let { data } = await api.get('/payment/get-stripe-key');
       setStripeApiKey(stripeApiKey = data.stripeApiKey);
+      console.log("fetching stripe key")
+      console.log(stripeApiKey)
     };
     getStripeApiKey();
   }, []);

@@ -27,6 +27,7 @@ const listTopProducts = async () => {
 };
 
 const listProductDetails = async (prod_id) => {
+  console.log("SERVICE- products details")
   const res = await api.get(`/products/${prod_id}`);
   let result = res.data.data;
   return result;
@@ -45,8 +46,9 @@ const createProductReview = async (prod_id, reviewForm, currProductByIdReviews) 
   console.log("currProdByIdReviews - service");
   console.log(currProductByIdReviews)
   // let {productInfo, productRating, productReviews} = currProductByIdReviews;
-  let newState = {...currProductByIdReviews};
-  newState.productReviews.unshift(result);
+  // let newState = {...currProductByIdReviews};
+  // let newState = currProductByIdReviews.productReviews.unshift(result);
+  let newState = [result, ...currProductByIdReviews.productReviews]
   console.log("currProdByIdReviews - service, updated");
   console.log(newState)
   return newState;
@@ -91,13 +93,17 @@ const updateProductReview = async (prod_id, review_id, reviewForm, currProductBy
   let result = res.data.data.updatedReview;
 
   console.log("currProdByIdReviews - service");
+  console.log("currProductByIdReviews")
   console.log(currProductByIdReviews)
-  let newState = {...currProductByIdReviews};
-  newState.productReviews.map(review => review.id === result.id ? review = result : review);
+  console.log("reviewForm")
+  console.log(reviewForm)
+  // let newState = {...currProductByIdReviews};
+  let newState;
+  newState = currProductByIdReviews.productReviews.map(review => review.id === result.id ? review = result : review);
   
   console.log("currProdByIdReviews - service, updated");
   console.log(newState)
-  return newState;
+  return newState;// saves as [{}], should be {}
 };
 
 const deleteProductReview = async (prod_id, review_id, currProductByIdReviews) => {
@@ -108,21 +114,43 @@ const deleteProductReview = async (prod_id, review_id, currProductByIdReviews) =
 };
 
 const updateProduct = async (prod_id, productForm, currProdById) => {
+// try {
+  // let servicedData = await updateProductForm(productForm);
+  // dispatch({type: PRODUCT_UPDATE_REQUEST});
+  // const res = await api.put(`/products/${prod_id}`, servicedData);
+  // let result = res.data.data.productInfo;
+  console.log("updating product info - SERVICE")
+  console.log(prod_id)
+      console.log(productForm)
+  // let servicedData = await updateProductForm(productForm);
   let servicedData = await updateProductForm(productForm);
+  console.log("servicedData")
+  console.log(servicedData)
   const res = await api.put(`/products/${prod_id}`, servicedData);
-  console.log("updating product info - service")
-  let result = res.data.data.productInfo;
-  console.log(result)
-  let newState = {...currProdById};
-  newState.productInfo = result;
+  // const res = await api.put(`/products/${prod_id}`, productForm);
 
-  console.log("-------result-------")
-  console.log(newState)
-  return newState;
+  let result = res.data.data.productInfo;
+  console.log("result")
+  console.log(result)
+  // let newState = {...currProdById};
+  console.log("newState")
+  // console.log(newState)
+  // newState.productInfo = result;
+  // state.productById = action.payload;
+  console.log(result)
+  console.log("-------newstate aftere update-------")
+  // console.log(newState)
+  console.log(result)
+  return result;
+  
+  
+  // } catch (err) {
+  //   console.error(err)
+  // }
 };
 
 const deleteProduct = async (prod_id, navigate) => {
-  await api.delete(`/products/${prod_id}/remove`);
+  await api.delete(`/products/${prod_id}`);
   return navigate('/admin/product-list');
 };
 

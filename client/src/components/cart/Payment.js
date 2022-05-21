@@ -14,6 +14,8 @@ const Payment = () => {
   const elements = useElements();
   // let paypalRef = useRef();
   let description;
+  let chargeCardToastId = "FailedToCharge";
+  let acctToastId = "acctToastId";
 
   const userAuth = useSelector(state => state.auth);
   const cartDetails = useSelector(state => state.cart);
@@ -31,12 +33,23 @@ const Payment = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      toast.warn('Please sign in to continue with payment.', {theme: 'colored'});
+      toast.warn('Please sign in to continue with payment.', {theme: 'colored', toastId: "signInToastId"});
+      console.log("navigate to login0")
       navigate('/login');
     }
-    if (cartItems.length === 0) navigate('/cart');
+    // if (cartItems.length === 0 && !isProcessing) navigate('/cart');
   }, []);
+  // if (cartItems.length === 0 && !isProcessing) {
+  //   console.log("navigate to cart")
+  //   navigate('/cart');
+  // }
 
+  // if (!isProcessing && (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress)) {
+  //   console.log("seems to go here after submission of purchase via payhpal")
+  //   console.log("navigate to shipping address")
+  //   navigate("/shipping-address");
+  // }
+  // if (cartItems.length === 0) navigate('/cart');
   // *** PAYPAL INTEGRATION ***
   useEffect(() => {
     if (paymentMethod === 'PayPal' && hasMounted && !sdkReady) {
@@ -45,6 +58,8 @@ const Payment = () => {
         createOrder: async function () {
           return await api.post('/payment/paypal-checkout', { cartItems })
           .then(res => {
+            console.log("setting proceess to true")
+            setIsProcessing(true)
               return res.data.id;
           })
           .catch(e => {
@@ -61,6 +76,7 @@ const Payment = () => {
                 orderType: "PayPal"
               }
               dispatch(createOrder(orderFormData));
+              console.log("NAVIGATE TO success")
               navigate('/success')
             })
         },
@@ -77,9 +93,11 @@ const Payment = () => {
     return null;
   }
 
-  if (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress) {
-    navigate("/shipping-address");
-  }
+  // if (!isProcessing && (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress)) {
+  //   console.log("seems to go here after submission of purchase via payhpal")
+  //   console.log("navigate to shipping address")
+  //   navigate("/shipping-address");
+  // }
 
   // *** CALCULATE TOTALS ***
   let price = {};
@@ -130,15 +148,16 @@ const Payment = () => {
       const res = await api.post('/payment/single-checkout-charge', chargeData);
       let result = res.data.data.clientSecret;
 
-      navigate('Charge successful.', {theme: 'colored'});
+      toast.success('Charge successful.', {theme: 'colored', toastId: "chargeSuccessToastId"});
       return result;
     } catch (err) {
-      navigate('Failed to charge card.', {theme: 'colored'});
+      toast.error('Failed to charge card.', {theme: 'colored', toastId: chargeCardToastId});
       const errors = err.response.data.errors;
 
       if (errors) {
         console.log("payment errors")
         console.log(errors)
+        console.error(errors)
         errors.forEach(error => toast.error(error.msg, {theme: 'colored'}));
       }
     }
@@ -150,13 +169,14 @@ const Payment = () => {
       const res = await api.post('/payment/checkout-charge-card', chargeData);
       let result = res.data.data.clientSecret;
 
-      toast.info('Charge successful.', {theme: 'colored'});
+      toast.info('Charge successful.', {theme: 'colored', toastId: "chargeSuccessToastId"});
       return result;
     } catch (err) {
-      toast.error('Failed to charge card.', {theme: 'colored'});
+      toast.error('Failed to charge card.', {theme: 'colored', toastId: chargeCardToastId});
       const errors = err.response.data.errors;
 
       if (errors) {
+        console.error(errors);
         errors.forEach(error => toast.error(error.msg, {theme: 'colored'}));
       }
     }
@@ -169,13 +189,14 @@ const Payment = () => {
       const res = await api.post('/payment/save-card-charge', chargeData);
       let result = res.data.data.clientSecret;
 
-      toast.info('Charge successful.', {theme: 'colored'});
+      toast.info('Charge successful.', {theme: 'colored', toastId: "chargeSuccessToastId"});
       return result;
     } catch (err) {
-      toast.error('Failed to charge card.', {theme: 'colored'});
+      toast.error('Failed to charge card.', {theme: 'colored', toastId: chargeCardToastId});
       const errors = err.response.data.errors;
 
       if (errors) {
+        console.error(errors);
         errors.forEach(error => toast.error(error.msg, {theme: 'colored'}));
       }
     }
@@ -193,7 +214,7 @@ const Payment = () => {
     setAddCardAndPay(false);
     setSinglePay(true);
     if (!isAuthenticated) {
-      toast.warn('Login to use card.', {theme: 'colored'});
+      toast.warn('Login to use card.', {theme: 'colored', toastId: "loginUseCardToastId"});
       guestCheck();
     }
   };
@@ -203,7 +224,7 @@ const Payment = () => {
     setAddCardAndPay(true);
     setSinglePay(false);
     if (!isAuthenticated) {
-      toast.warn('Login to use card.', {theme: 'colored'});
+      toast.warn('Login to use card.', {theme: 'colored', toastId: "loginUseCardToastId"});
       guestCheck();
     }
   };
@@ -224,7 +245,8 @@ const Payment = () => {
       }
       if (addCardAndPay && !guestCheckout && !singlePay) {
         if (!isAuthenticated) {
-          toast.error('Login or create account in order to save card and complete order.',{theme: 'colored'});
+          toast.error('Login or create account in order to save card and complete order.',{theme: 'colored', toastId: acctToastId});
+          console.log("navigate to login2")
           return navigate('/login');
         }
         description = "Card saved. Single purchase.";
@@ -234,11 +256,13 @@ const Payment = () => {
       // charge existing card
       if (singlePay && !guestCheckout && !addCardAndPay) {
         if (!isAuthenticated) {
-          toast.error('Login or create account in order to save card and complete order.', {theme: 'colored'});
+          toast.error('Login or create account in order to save card and complete order.', {theme: 'colored', toastId: acctToastId});
+          console.log("navigate to login3")
           return navigate('/login');
         }
         if (!cardToUse) {
-          toast.error('Login or create account in order to save card and complete order.',{ theme: 'colored'});
+          toast.error('Login or create account in order to save card and complete order.', {theme: 'colored', toastId: acctToastId});
+          console.log("navigate to login4")
           return navigate('/login');
         };
         description = "Purchase made with saved card.";
@@ -257,6 +281,7 @@ const Payment = () => {
 
         dispatch(createOrder(orderFormData));
         setIsProcessing(false); // enables btn
+        console.log("navigate to success 2")
         return navigate('/success')
       }
       const cardElem = elements.getElement(CardElement);
@@ -279,7 +304,7 @@ const Payment = () => {
 
       if (stripeResult.error) {
         setIsProcessing(false);
-        toast.error(`Error: ${stripeResult.error}`, {theme: 'colored'});
+        toast.error(`Error: ${stripeResult.error}`, {theme: 'colored', toastId: "stripeErrToastId"});
         // setChargeError(stripeResult.error);
       }
 
@@ -304,12 +329,13 @@ const Payment = () => {
 
       dispatch(createOrder(orderFormData));
       setIsProcessing(false); // enables btn
+      console.log("navigate to success 3")
       navigate('/success')
     } catch (err) {
       setIsProcessing(false); // enables btn
       console.error(`Error Message: ${err}.`);
       // setChargeError(`There was an issue in processing your payment. Error: ${err} Try again.`);
-      toast.error(`There was an issue in processing your payment. Try again.`, {theme: 'colored'});
+      toast.error(`There was an issue in processing your payment. Try again.`, {theme: 'colored', toastId: "processToastId"});
     }
   }
 
@@ -516,9 +542,10 @@ const Payment = () => {
         </div>
       </form>
     ) : (
-      <Navigate to="/confirm-order" />
+      <></>
     )}
     </>
   )
 }
 export default Payment;
+// {/* <Navigate to="/confirm-order" /> */}

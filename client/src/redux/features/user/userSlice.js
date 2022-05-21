@@ -9,6 +9,7 @@ const initialState = {
   error: []
 }
 
+// * works
 export const getUserProfile = createAsyncThunk(
   'user/profile/get',
   async (_, thunkAPI) => {
@@ -21,13 +22,14 @@ export const getUserProfile = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to get user profile.", {theme: "colored"});
+      toast.error("Failed to get user profile.", {theme: "colored", toastId: "getUserToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const getUserProfileAdmin = createAsyncThunk(
   'user/profile/admin/get',
   async (user_id, thunkAPI) => {
@@ -40,13 +42,14 @@ export const getUserProfileAdmin = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to get user profile.", {theme: "colored"});
+      toast.error("Failed to get user profile.", {theme: "colored", toastId: "getUserToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const getUsersAdmin = createAsyncThunk(
   'user/getAll/Admin',
   async (_, thunkAPI) => {
@@ -59,13 +62,14 @@ export const getUsersAdmin = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to list users.", {theme: "colored"});
+      toast.error("Failed to list users.", {theme: "colored", toastId: "getUsersToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const updateUserInfo = createAsyncThunk(
   'user/info/update',
   async (userForm, thunkAPI) => {
@@ -78,7 +82,7 @@ export const updateUserInfo = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to update user information.", {theme: "colored"});
+      toast.error("Failed to update user information.", {theme: "colored", toastId: "updateUserToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
@@ -97,13 +101,14 @@ export const createUserProfile = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to create user profile.", {theme: "colored"});
+      toast.error("Failed to create user profile.", {theme: "colored", toastId: "createUserToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const updateUserProfile = createAsyncThunk(
   'user/profile/update',
   async (profileForm, thunkAPI) => {
@@ -116,13 +121,14 @@ export const updateUserProfile = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to update user profile.", {theme: "colored"});
+      toast.error("Failed to update user profile.", {theme: "colored", toastId: "updateUserToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const updateUserAdmin = createAsyncThunk(
   'user/update/admin',
   async ({user_id, userForm}, thunkAPI) => {
@@ -135,7 +141,7 @@ export const updateUserAdmin = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Admin failed to update user profile.", {theme: "colored"});
+      toast.error("Admin failed to update user profile.", {theme: "colored", toastId: "updateUserToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
@@ -190,7 +196,7 @@ export const userSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.userById = action.payload;
-        toast.success("User information updated!", {theme: "colored"});
+        toast.success("User information updated!", {theme: "colored", toastId: "updateUserInfoToastId"});
       })
       .addCase(updateUserInfo.rejected, (state, action) => {
         state.loading = false;
@@ -203,7 +209,7 @@ export const userSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.userById = action.payload;
-        toast.success("Profile created.", {theme: "colored"});
+        toast.success("Profile created.", {theme: "colored", toastId: "profileCreatedToastId"});
       })
       .addCase(createUserProfile.rejected, (state, action) => {
         state.loading = false;
@@ -216,7 +222,7 @@ export const userSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.userById = action.payload;
-        toast.success("Profile updated.", {theme: "colored"});
+        toast.success("Profile updated.", {theme: "colored", toastId: "profileUpdatedToastId"});
       })
       .addCase(updateUserProfile.rejected, (state, action) => {
         state.loading = false;

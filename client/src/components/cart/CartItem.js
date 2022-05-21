@@ -28,12 +28,12 @@ const CartItem = ({
     if (qty === stockQuantity) return;
     if (qty > stockQuantity) return qty === stockQuantity;
     const newQty = currQuantity + 1;
-    dispatch(addItemToCartGuest({prod_id, newQty}));
+    dispatch(addItemToCartGuest({prod_id, qty: newQty}));
   }
   const decreaseQty = (prod_id, currQuantity) => {
     if (qty <= 1) return qty === 1;
     const newQty = currQuantity - 1;
-    dispatch(addItemToCartGuest({prod_id, newQty}));
+    dispatch(addItemToCartGuest({prod_id, qty: newQty}));
   }
 
   const deleteItemFromCartHandler = () => {

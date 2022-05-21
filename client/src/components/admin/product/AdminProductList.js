@@ -18,7 +18,7 @@ const AdminProductList = () => {
 
   useEffect(() => {
     dispatch(listAllCategories());
-    dispatch(listAllProducts({keyword: keyword ? keyword : '', category: category !== 'All' ? category : '', currentPage, itemsPerPage}));
+    dispatch(listAllProducts({keyword: keyword ? keyword : '', category: category !== 'All' ? category : '', pageNumber: currentPage, itemsPerPage}));
   }, [dispatch, keyword, category, currentPage, itemsPerPage]);
 
   useEffect(() => {

@@ -46,7 +46,7 @@ const logout = async (navigate, history = null, thunkAPI) => {
 
   if (navigate) navigate('/');
   if (history && !navigate) history.push("/");
-  toast.success("Logout successful.", {theme: "colored"});
+  // toast.success("Logout successful.", {theme: "colored"});
 
   return await api.post('/auth/logout');
 };
@@ -61,6 +61,7 @@ const deleteUser = async (navigate, thunkAPI) => {
   return navigate('/');
 };
 
+// * works
 const forgotPassword = async (email) => {
   const res = await api.post('/auth/forgot-password', {email});
 
@@ -68,6 +69,7 @@ const forgotPassword = async (email) => {
   return result;
 };
 
+// * works
 const verifyPassword = async (token, email, navigate) => {
   const res = await api.post(`/auth/verify-reset?token=${token}&email=${email}`);
 
@@ -75,6 +77,7 @@ const verifyPassword = async (token, email, navigate) => {
   return result;
 };
 
+// * works
 const resetPassword = async (token, email, passwords, navigate) => {
   const res = await api.post(`/auth/reset-password?token=${token}&email=${email}`, passwords);
   let result = res.data.status;

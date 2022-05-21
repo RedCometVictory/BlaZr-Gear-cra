@@ -70,7 +70,7 @@ const AdminProductCreate = () => {
   const onSubmit = e => {
     e.preventDefault();
     setUploadingImage(true);
-    dispatch(createProduct({formProductData, navigate}));
+    dispatch(createProduct({productForm: formProductData, navigate}));
   }
 
   return (

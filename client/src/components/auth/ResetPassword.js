@@ -42,9 +42,9 @@ const ResetPassword = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      toast.error('Passwords do not match.', {theme: 'colored'});
+      toast.error('Passwords do not match.', {theme: 'colored', toastId: "resetToastId"});
     } else {
-      let passInfo = {token, email, formData, navigate};
+      let passInfo = {token, email, password, password2, navigate};
       dispatch(resetPassword(passInfo));
     }
     setPasswordSent(true)

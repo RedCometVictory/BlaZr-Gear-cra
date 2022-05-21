@@ -24,11 +24,11 @@ const Cart = () => {
   useEffect(() => {
     dispatch(getAllProductIds());
 
-    if (!isAuthenticated) return dispatch(getCartGuest());
+    dispatch(getCartGuest());
     if (isAuthenticated) {
       dispatch(getUserProfile());
       // dispatch(getCart());
-      return dispatch(getCartGuest()); 
+      // return dispatch(getCartGuest()); 
     }
   }, [dispatch, isAuthenticated]);
 
@@ -68,7 +68,7 @@ const Cart = () => {
   const checkoutHandler = () => {
     // if (updatingCart) return;
     if (!isAuthenticated) {
-      toast.warn('Please login / create account to continue with checkout.', {theme: 'danger'});
+      toast.warn('Please login / create account to continue with checkout.', {theme: 'colored', toastId: "loginToastId"});
       return navigate('/login');
     }
     // const orderPrice = localStorage.setItem('__orderPrice', JSON.stringify(price));

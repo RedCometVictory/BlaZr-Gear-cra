@@ -78,7 +78,7 @@ const CartList = ({showCart, setShowCart, cartItems}) => {
   // if (updatingCart) setUpdatingCart(false);
   // ------------------------------------
   const showCartHandler = () => {
-    toast.info(`Show Cart = ${showCart}`, {theme: 'colored'});
+    toast.info(`Show Cart = ${showCart}`, {theme: 'colored', toastId: "showCartToastId"});
     if (showCart) setShowCart(false);
   };
 
@@ -86,7 +86,7 @@ const CartList = ({showCart, setShowCart, cartItems}) => {
     // if (updatingCart) return;
     if (showCart) setShowCart(false);
     if (!isAuthenticated) {
-      toast.warn('Please login / create account to continue with checkout.', {theme: 'colored'});
+      toast.warn('Please login / create account to continue with checkout.', {theme: 'colored', toastId: "loginToastId"});
       return navigate('/login');
     }
 

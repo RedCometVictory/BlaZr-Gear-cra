@@ -23,7 +23,7 @@ const ConfirmOrder = () => {
   }
 
   if (!isAuthenticated) {
-    toast.warn('Sign in to continue with checkout.', {theme: 'colored'});
+    toast.warn('Sign in to continue with checkout.', {theme: 'colored', toastId: "checkToastId"});
     navigate('/login');
   }
   

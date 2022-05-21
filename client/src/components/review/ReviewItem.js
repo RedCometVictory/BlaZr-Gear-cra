@@ -26,7 +26,7 @@ const ReviewItem = ({ review }) => {
     e.preventDefault();
     let formData = {...editFormData, rating};
     
-    dispatch(updateProductReview({prod_id: review.product_id, review_id: review.id, formData}));
+    dispatch(updateProductReview({prod_id: review.product_id, review_id: review.id, reviewForm: formData}));
     setEditFormData({ title: '', description: '' });
     setRating(1);
   };

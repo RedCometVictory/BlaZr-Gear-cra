@@ -20,11 +20,11 @@ const AdminSlideUpdate = ({stateChanger}) => {
 
   useEffect(() => {
     setFormProductData({ // on comp load
-      title: loading || !slide ? '' : slide.title,
+      title: loading || !slide.title ? '' : slide.title,
       image_url: loading || !slide ? '' : slide.image_url,
-      description: loading || !slide ? '' : slide.description,
-      theme: loading || !slide ? '' : slide.theme,
-      category: loading || !slide ? '' : slide.category
+      description: loading || !slide.description ? '' : slide.description,
+      theme: loading || !slide.theme ? '' : slide.theme,
+      category: loading || !slide.category ? '' : slide.category
     })
   }, [dispatch, loading]);
 
@@ -82,7 +82,7 @@ const AdminSlideUpdate = ({stateChanger}) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    dispatch(updateSlide({slide_id, formProductData, navigate}));
+    dispatch(updateSlide({slide_id, slideForm: formProductData, navigate}));
     fileInputText.current.value = ""; // upon submit clear field for image file upload
     stateChanger(false);
   }

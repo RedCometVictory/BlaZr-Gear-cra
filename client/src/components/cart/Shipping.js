@@ -27,14 +27,15 @@ const Shipping = () => {
   const [lat, setLat] = useState(shippingAddress?.lat || '');
   const [lng, setLng] = useState(shippingAddress?.lng || '');
   const [mapLocation, setMapLocation] = useState(false);
+  let addressToastId = "shippingWarning";
 
   useEffect(() => {
     if (!isAuthenticated) {
-      toast.success('Please login / create account to continue with checkout.', {theme: 'colored'});
+      toast.success('Please login / create account to continue with checkout.', {theme: 'colored', toastId: "loginToastId"});
       return navigate('/login');
     }
     if (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress) {
-      toast.success('Please provide an shipping address. Primary address is considered shipping address.', {theme: 'colored'});
+      toast.info('Please provide an shipping address. Primary address is considered shipping address.', {theme: 'colored', toastId: addressToastId});
     };
     if (cartDetails.cartItems.length === 0) navigate('/cart');
   }, [isAuthenticated]);
@@ -62,7 +63,9 @@ const Shipping = () => {
       submitHandler(e);
     }
   };
-
+// if (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress) {
+//       toast.info('Please provide an shipping address. Primary address is considered shipping address.', {theme: 'colored', toastId: addressToastId});
+//     };
   const submitHandler = (e) => {
     e.preventDefault();
     if (isAuthenticated) {

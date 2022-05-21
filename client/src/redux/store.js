@@ -31,6 +31,8 @@ let currentState = store.getState();
 store.subscribe(() => {
   let previousState = currentState;
   currentState = store.getState(); // from rootReducer
+  console.log("STATE")
+  console.log(currentState)
   if (previousState.auth.token !== currentState.auth.token) {
     const token = currentState.auth.token;
     setAuthToken(token);
@@ -64,4 +66,29 @@ store.subscribe(() => {
   }
 });
 export default store;
+*/
+
+
+/*
+//Get All Products
+export const getProducts = createAsyncThunk('products/get-all', async(_,thunkAPI) => {
+    try {
+        //const {keyword, pageNumber} = params
+        //return await productService.getProducts(keyword, pageNumber)
+        return await productService.getProducts()
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//Get a Single Product
+export const getProductDetails = createAsyncThunk('product/get', async(id, thunkAPI) => {
+    try {
+        return await productService.getProductDetails(id)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 */

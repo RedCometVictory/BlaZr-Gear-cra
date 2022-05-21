@@ -23,9 +23,9 @@ const Register = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    toast.success('Form registry submitted!', {theme: "colored"})
+    toast.success('Form registry submitted!', {theme: "colored", toastId: "RegToastId"})
     if (password !== password2) {
-      toast.success('Passwords do not match.', {theme: 'colored'});
+      toast.success('Passwords do not match.', {theme: 'colored', toastId: "noMatchToastId"});
     } else {
       dispatch(registerUser(formRegData));
     }

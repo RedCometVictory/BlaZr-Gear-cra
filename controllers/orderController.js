@@ -85,9 +85,9 @@ exports.getMyOrders = async (req, res, next) => {
       'SELECT * FROM orders WHERE user_id = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3;', [id, limit, offset]
     );
 
-    if (orders.rowCount === 0 || !orders) {
-      return res.status(404).json({ errors: [{ msg: "You have not made any orders." }] });
-    }
+    // if (orders.rowCount === 0 || !orders) {
+    //   return res.status(404).json({ errors: [{ msg: "You have not made any orders." }] });
+    // }
 
     count = totalOrders.rows[0].count;
 

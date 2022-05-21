@@ -2,15 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import imageService from "./imageService";
 
-// const setAlert = (msg, alertType, timeout = 6000) => {
-//   const id = uuidv4();
-  
-// };
-// const alertService = {
-//   setAlert,
-//   removeAlert
-// }
-// export default alertService;
 const initialState = {
   images: [],
   image: {},
@@ -20,6 +11,7 @@ const initialState = {
   error: [],
 };
 
+// * works
 export const getAllImages = createAsyncThunk(
   'image/get/all',
   async ({pageNumber, itemsPerPage}, thunkAPI) => {
@@ -32,13 +24,14 @@ export const getAllImages = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to retrieve images.", {theme: "colored"});
+      toast.error("Failed to retrieve images.", {theme: "colored", toastId: "ImageToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
+// * works
 export const getImageDetails = createAsyncThunk(
   'image/get/detail',
   async (image_id, thunkAPI) => {
@@ -51,13 +44,13 @@ export const getImageDetails = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to list image details.", {theme: "colored"});
+      toast.error("Failed to list image details.", {theme: "colored", toastId: "ImageToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
-
+// * works
 export const deleteImage = createAsyncThunk(
   'image/delete',
   async ({image_id, navigate}, thunkAPI) => {
@@ -70,7 +63,7 @@ export const deleteImage = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to delete image.", {theme: "colored"});
+      toast.error("Failed to delete image.", {theme: "colored", toastId: "ImageToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
@@ -115,8 +108,8 @@ export const imageSlice = createSlice({
         state.loading = true;
       })
       .addCase(deleteImage.fulfilled, (state, action) => {
-        state.loading = false;
-        toast.success("Deleted image.", {theme: "colored"});
+        state.loading = true;
+        toast.success("Deleted image.", {theme: "colored", toastId: "deleteImageToastId"});
       })
       .addCase(deleteImage.rejected, (state, action) => {
         state.loading = false;

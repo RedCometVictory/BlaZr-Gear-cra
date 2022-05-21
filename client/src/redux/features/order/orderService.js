@@ -2,6 +2,7 @@ import api from "../../../utils/api";
 import { clearCart } from "../cart/cartSlice";
 
 const createOrder = async (orderFormData, thunkAPI) => {
+  // TODO< creates redirect err to cart. may have to clear after LS remove item ans limit erasure to state and not ls?
   thunkAPI.dispatch(clearCart());
   const res = await api.post('/orders', orderFormData);
   let result = res.data.data;
@@ -63,6 +64,8 @@ const refundPayPalOrder = async (orderId, chargeData) => {
 };
 
 const deleteOrder = async (order_id, navigate) => {
+  console.log("ORDER SERVICE")
+  console.log(order_id)
   await api.delete(`/orders/${order_id}/remove`);
   return navigate('/admin/order-list');
 };
