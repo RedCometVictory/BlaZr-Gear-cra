@@ -379,6 +379,9 @@ exports.makePayPalPayment = async (req, res, next) => {
 // /payment/refund-paypal/order/:order_id
 // private / Admin
 exports.refundPayPalPayment = async (req, res, next) => {
+  console.log("==============================")
+  console.log("req.body")
+  console.log(req.body)
   let {orderId, userId, paypalPaymentId, paypalCaptureId, amount } = req.body;
   try {
     const refundedAtDate = new Date().toString().slice(0,10);

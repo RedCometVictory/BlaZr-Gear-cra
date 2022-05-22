@@ -180,11 +180,12 @@ export const deliverOrder = createAsyncThunk(
 
 export const refundOrder = createAsyncThunk(
   'order/refund',
-  async (order_id, thunkAPI) => {
+  async (orderId, thunkAPI) => {
     try {
       console.log("ORDER SLICE")
       console.log("refundOrder")
-      return await orderService.refundOrder(order_id);
+      console.log(orderId)
+      return await orderService.refundOrder(orderId);
     } catch (err) {
       const message =
         (err.response &&
@@ -192,7 +193,7 @@ export const refundOrder = createAsyncThunk(
           err.response.data.message) ||
         err.message ||
         err.toString()
-      toast.error("Failed to change order status to refund.", {theme: "colored", toastId: "refundOrderToastId"});
+      toast.error("Failed to set order status to refund.", {theme: "colored", toastId: "refundOrderToastId"});
       // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
@@ -206,6 +207,8 @@ export const refundPayPalOrder = createAsyncThunk(
       console.log("ORDER SLICE")
       console.log("refundPayPalOrder")
       const chargeData = { orderId, userId, paypalPaymentId, paypalCaptureId, amount };
+      console.log("chargeData")
+      console.log(chargeData)
       return await orderService.refundPayPalOrder(orderId, chargeData);
     } catch (err) {
       const message =
@@ -384,7 +387,7 @@ export const orderSlice = createSlice({
         //   orderItems: [...state.order.orderItems],
         //   userInfo: {...state.order.userInfo}
         // };
-        toast.success("Order deleted.", {theme: "colored", toastId: "deleteOrderToastId"});
+        toast.success("Order refunded.", {theme: "colored", toastId: "refundOrderToastId"});
       })
       .addCase(refundOrder.rejected, (state, action) => {
         state.loading = false;

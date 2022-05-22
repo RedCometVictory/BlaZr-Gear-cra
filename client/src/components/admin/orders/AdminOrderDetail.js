@@ -40,11 +40,11 @@ const AdminOrderDetail = () => {
   const refundHandler = (value, orderID = '') => {
     setRefund(value);
     if (orderID && order?.orderInfo?.payment_method === "PayPal") {
-      dispatch(refundPayPalOrder({order_id, userId: userInfo.id, paypalPaymentId: order?.orderInfo?.paypal_order_id, paypalCaptureId: order?.orderInfo?.paypal_capture_id, amount: order?.orderInfo?.total_price}));
+      dispatch(refundPayPalOrder({orderId: order_id, userId: userInfo.id, paypalPaymentId: order?.orderInfo?.paypal_order_id, paypalCaptureId: order?.orderInfo?.paypal_capture_id, amount: order?.orderInfo?.total_price}));
     }
     if (orderID && order?.orderInfo?.payment_method === "Stripe") {
       // dispatch(refundCharge(order_id, userInfo.id, order?.orderInfo?.stripe_payment_id, order?.orderInfo?.total_price));
-      dispatch(refundCharge({order_id, userId: userInfo.id, stripePaymentId: order?.orderInfo?.stripe_payment_id, amount: order?.orderInfo?.total_price}));
+      dispatch(refundCharge({orderId: order_id, userId: userInfo.id, stripePaymentId: order?.orderInfo?.stripe_payment_id, amount: order?.orderInfo?.total_price}));
     }
   };
   const deleteOrderHandler = (value, orderID = '') => {

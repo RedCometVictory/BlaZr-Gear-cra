@@ -52,12 +52,17 @@ const deliverOrder = async (order_id) => {
   return result;
 };
 
-const refundOrder = async (order_id) => {
-  const res = await api.get(`/orders/${order_id}/refund`);
+const refundOrder = async (orderId) => {
+  console.log("ORDERSSERVICE-refundOrder")
+  console.log("orderId")
+  console.log(orderId)
+  const res = await api.get(`/orders/${orderId}/refund`);
   let result = res.data.data;
   return result;
 };
 const refundPayPalOrder = async (orderId, chargeData) => {
+  console.log("ORDER SERVICE")
+  console.log(chargeData)
   const res = await api.post(`/payment/refund-paypal/order/${orderId}`, chargeData);
   let result = res.data.data;
   return result;

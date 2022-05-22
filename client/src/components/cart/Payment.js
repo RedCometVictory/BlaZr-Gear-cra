@@ -37,18 +37,19 @@ const Payment = () => {
       console.log("navigate to login0")
       navigate('/login');
     }
-    // if (cartItems.length === 0 && !isProcessing) navigate('/cart');
+    if (cartItems.length === 0 && !isProcessing && !sdkReady) navigate('/cart');
+    // if (cartItems.length === 0) navigate('/cart');
   }, []);
   // if (cartItems.length === 0 && !isProcessing) {
   //   console.log("navigate to cart")
   //   navigate('/cart');
   // }
 
-  // if (!isProcessing && (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress)) {
-  //   console.log("seems to go here after submission of purchase via payhpal")
-  //   console.log("navigate to shipping address")
-  //   navigate("/shipping-address");
-  // }
+  if (!sdkReady && !isProcessing && (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress)) {
+    console.log("seems to go here after submission of purchase via payhpal")
+    console.log("navigate to shipping address")
+    navigate("/shipping-address");
+  }
   // if (cartItems.length === 0) navigate('/cart');
   // *** PAYPAL INTEGRATION ***
   useEffect(() => {

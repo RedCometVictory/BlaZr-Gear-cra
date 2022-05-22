@@ -2,7 +2,7 @@ import api from "../../../utils/api";
 import { toast } from "react-toastify";
 import { addCardToUser, stripeReset } from "../stripe/stripeSlice";
 import { userReset } from "../user/userSlice";
-import { clearCart } from "../cart/cartSlice";
+import { clearCartLogout } from "../cart/cartSlice";
 import { orderReset } from "../order/orderSlice";
 import { loadUser as loadUserSlice, clearAuth } from "./authSlice";
 
@@ -34,7 +34,7 @@ const loginUser = async (formData, thunkAPI) => {
 };
 
 const logout = async (navigate, history = null, thunkAPI) => {
-  thunkAPI.dispatch(clearCart());
+  thunkAPI.dispatch(clearCartLogout());
   thunkAPI.dispatch(stripeReset());
   thunkAPI.dispatch(userReset());
   thunkAPI.dispatch(orderReset());
@@ -52,7 +52,7 @@ const logout = async (navigate, history = null, thunkAPI) => {
 };
 
 const deleteUser = async (navigate, thunkAPI) => {
-  thunkAPI.dispatch(clearCart());
+  thunkAPI.dispatch(clearCartLogout());
   thunkAPI.dispatch(userReset());
   thunkAPI.dispatch(clearAuth());
 

@@ -237,6 +237,14 @@ export const cartSlice = createSlice({
       state.cartItems = []
       state.shippingAddress = {}
       state.paymentMethod = null
+    },
+    clearCartLogout: (state) => {
+      localStorage.removeItem('__cart')
+      localStorage.removeItem('__shippingAddress')
+      localStorage.removeItem('__paymentMethod')
+      state.cartItems = []
+      state.shippingAddress = {}
+      state.paymentMethod = null
     }
   },
   extraReducers: (builder) => {
@@ -366,5 +374,5 @@ export const cartSlice = createSlice({
   }
 });
 
-export const { cartReset, clearCart } = cartSlice.actions;
+export const { cartReset, clearCart, clearCartLogout } = cartSlice.actions;
 export default cartSlice.reducer;
