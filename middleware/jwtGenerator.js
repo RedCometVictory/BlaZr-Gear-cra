@@ -38,11 +38,11 @@ function accessTokenGenerator (user_id, role, cart_id) {
     }
   }
   return jwt.sign(
-    // payload, JWT_SECRET, { expiresIn: '30s' }, // 30secs
+    payload, JWT_SECRET, { expiresIn: '30s' }, // 30secs
     // payload, JWT_SECRET, { expiresIn: '180s' }, // 3m
     // payload, JWT_SECRET, { expiresIn: '1800s' }, //30m
     // payload, JWT_SECRET, { expiresIn: "5 days" }
-    payload, JWT_SECRET, { expiresIn: "5d" }
+    // payload, JWT_SECRET, { expiresIn: "5d" }
   );
 };
 
@@ -97,9 +97,9 @@ function refreshTokenCookieOptions() {
     secure: NODE_ENV === 'production' ? true : true,
     httpOnly: NODE_ENV === 'production' ? true : false,
     sameSite: NODE_ENV === 'production' ? "strict" : "none",
-    // path: '/'
+    path: '/'
     // * Ensure cookie only interact with specified url, prevents 401 loop when err occurs but auth still valid
-    path: '/api/auth/refresh-token'
+    // path: '/api/auth/refresh-token'
   }
 };
 

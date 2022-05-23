@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import authService from "./authService";
 
 const initialState = {
-  token: localStorage.getItem("token"),
+  token: localStorage.getItem("token") ? localStorage.getItem("token") : null,
   isAuthenticated: localStorage.getItem("__userInfo") ? true : false,
   loading: false,
   userInfo: localStorage.getItem("__userInfo") ? JSON.parse(localStorage.getItem("__userInfo")) : {},
@@ -262,7 +262,7 @@ export const authSlice = createSlice({
       .addCase(logout.pending, (state) => {
         state.loading = true;
       })
-      .addCase(logout.fulfilled, (state, action) => {
+      .addCase(logout.fulfilled, (state) => {
         state.token = null;
         state.loading = false;
         state.isAuthenticated = false;

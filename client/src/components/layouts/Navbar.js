@@ -48,7 +48,7 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    dispatch(logout(navigate));
+    dispatch(logout({navigate, history: null}));
   }
 
   // const showCartHandler = (value) => {

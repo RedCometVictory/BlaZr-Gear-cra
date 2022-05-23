@@ -56,8 +56,11 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refResponse = await api.get("/auth/refresh-token");
+        console.log("refreshing token of access")
         let accessToken = refResponse.data.data.token;
         if (accessToken) {
+          console.log("acess token exists")
+          console.log(accessToken)
           store.dispatch(refreshAccessToken(accessToken));
           config.headers["Authorization"] = "Bearer " + accessToken;
         }

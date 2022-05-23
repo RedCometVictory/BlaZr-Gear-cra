@@ -48,7 +48,8 @@ const logout = async (navigate, history = null, thunkAPI) => {
   if (history && !navigate) history.push("/");
   // toast.success("Logout successful.", {theme: "colored"});
 
-  return await api.post('/auth/logout');
+  await api.post('/auth/logout');
+  return; 
 };
 
 const deleteUser = async (navigate, thunkAPI) => {
@@ -93,6 +94,7 @@ const refreshAccessToken = async (newAccessToken, tokenExample) => {
   console.log("---------------------------------")
   localStorage.setItem("token", newAccessToken);
   // TODO: remove console.log and tokenexample after test
+  return newAccessToken;
 };
 
 const authService = {

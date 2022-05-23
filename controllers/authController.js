@@ -406,7 +406,10 @@ exports.authRefreshToken = async (req, res, next) => {
 // Public
 exports.authLogout = async (req, res, next) => {
   const { refresh } = req.cookies; 
+  console.log("++++++++++++LOGGING OUT++++++++++++++")
   // verify token to get payload...
+  console.log(req.cookies)
+  console.log(req.user)
   try {
     const verifiedRefToken = await validateRefreshToken(refresh);
 
