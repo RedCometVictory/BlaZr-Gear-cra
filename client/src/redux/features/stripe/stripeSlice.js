@@ -15,7 +15,7 @@ const initialState = {
 
 let chargeCardToastId = "chargeCardToastId";
 let refundCardToastId = "refundCardToastId";
-// * works
+
 export const setCard = createAsyncThunk(
   'stripe/setCard',
   async (card, thunkAPI) => {
@@ -29,12 +29,11 @@ export const setCard = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to set card.", {theme: "colored", toastId: "setCardToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
-// * works
+
 export const addCardToUser = createAsyncThunk(
   'stripe/addCard/toUser',
   async (stripeId, thunkAPI) => {
@@ -48,12 +47,11 @@ export const addCardToUser = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list card(s) of user account.", {theme: "colored", toastId: "addCardToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
-// * works
+
 export const singleCharge = createAsyncThunk(
   'stripe/charge/single',
   async ({total, description, cart}, thunkAPI) => {
@@ -67,12 +65,11 @@ export const singleCharge = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to charge card.", {theme: "colored", toastId: chargeCardToastId});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
-// * works
+
 export const saveCardAndCharge = createAsyncThunk(
   'stripe/charge/saveCard',
   async ({total, description, cart}, thunkAPI) => {
@@ -86,12 +83,11 @@ export const saveCardAndCharge = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to charge card.", {theme: "colored", toastId: chargeCardToastId});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
-// * works
+
 export const singleChargeCard = createAsyncThunk(
   'stripe/charge/single/card',
   async ({card, total, description, cart}, thunkAPI) => {
@@ -105,7 +101,6 @@ export const singleChargeCard = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to charge card.", {theme: "colored", toastId: chargeCardToastId});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -124,19 +119,15 @@ export const getStripeCharge = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to get charge. Contact customer support recommended.", {theme: "colored", toastId: "getChargeCardToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * main
 export const refundCharge = createAsyncThunk(
   'stripe/charge/refund',
   async ({orderId, userId, stripePaymentId, amount}, thunkAPI) => {
     try {
-      console.log("REFUNDING STRIPe")
-      console.log(orderId)
       thunkAPI.dispatch(refundOrder(orderId));
       return await stripeService.refundCharge(orderId, userId, stripePaymentId, amount, thunkAPI);
     } catch (err) {
@@ -147,12 +138,11 @@ export const refundCharge = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to refund card. Contact customer support recommended.", {theme: "colored", toastId: refundCardToastId});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
-// * main
+
 export const deleteCard = createAsyncThunk(
   'stripe/delete/card',
   async (cardId, thunkAPI) => {
@@ -167,7 +157,6 @@ export const deleteCard = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to remove card / payment method.", {theme: "colored", toastId: "deleteCardToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -251,7 +240,6 @@ export const stripeSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.clientSecret = action.payload;
-        // toast.success("Refund successful.", {theme: "colored", toastId: "refundSuccessfulToastId"});
       })
       .addCase(getStripeCharge.rejected, (state, action) => {
         state.loading = false;

@@ -16,7 +16,6 @@ let resetCartToastId = "resetCartToastId";
 let addCartToastId = "addCartToastId";
 let removeCartToastId = "removeCartToastId";
 
-// * works
 export const getCart = createAsyncThunk(
   'cart/get/all',
   async (_, thunkAPI) => {
@@ -30,13 +29,11 @@ export const getCart = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to get cart.", {theme: "colored", toastId: getCartToastId});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const getCartGuest = createAsyncThunk(
   'cart/get/all/guest',
   async (_, thunkAPI) => {
@@ -57,16 +54,12 @@ export const getCartGuest = createAsyncThunk(
   }
 );
 
-// * works
 export const resetCartOnProductDelete = createAsyncThunk(
   'cart/resetCart/productDelete',
   async (match, thunkAPI) => {
     try {
-      console.log("match")
-      console.log(match)
       return await cartService.resetCartOnProductDelete(match);
     } catch (err) {
-      // TODO: dispatch(setAlert('Failed to login. Incorrect email or password.', 'danger'));
       const message =
         (err.response &&
           err.response.data &&
@@ -74,13 +67,11 @@ export const resetCartOnProductDelete = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to reset guest cart.", {theme: "colored", toastId: resetCartToastId});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const addItemToCart = createAsyncThunk(
   'cart/item/add',
   async ({prod_id, qty}, thunkAPI) => {
@@ -95,13 +86,11 @@ export const addItemToCart = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to add to cart.", {theme: "colored", toastId: addCartToastId});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const addItemToCartGuest = createAsyncThunk(
   'cart/item/add/guest',
   async ({prod_id, qty}, thunkAPI) => {
@@ -116,13 +105,11 @@ export const addItemToCartGuest = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to add to cart.", {theme: "colored", toastId: addCartToastId});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const updateItemInCart = createAsyncThunk(
   'cart/item/update',
   async ({prod_id, cartQty}, thunkAPI) => {
@@ -143,7 +130,6 @@ export const updateItemInCart = createAsyncThunk(
   }
 );
 
-// * works
 export const removeFromCart = createAsyncThunk(
   'cart/item/remove',
   async (_, thunkAPI) => {
@@ -158,13 +144,11 @@ export const removeFromCart = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to remove item from cart.", {theme: "colored", toastId: removeCartToastId});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const removeFromCartGuest = createAsyncThunk(
   'cart/item/remove/guest',
   async (prod_id, thunkAPI) => {
@@ -179,13 +163,11 @@ export const removeFromCartGuest = createAsyncThunk(
         err.message ||
         err.toString()
         toast.error("Failed to remove item from cart.", {theme: "colored", toastId: removeCartToastId});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const shippingAddressForCart = createAsyncThunk(
   'cart/shippingAddress/add',
   async (shippingAddress, thunkAPI) => {
@@ -199,13 +181,11 @@ export const shippingAddressForCart = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to set shipping address for cart.", {theme: "colored", toastId: "shippingCartToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const paymentMethodForCart = createAsyncThunk(
   'cart/paymentMethod/add',
   async (formData, thunkAPI) => {
@@ -219,7 +199,6 @@ export const paymentMethodForCart = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to set payment method from cart.", {theme: "colored", toastId: "paymentMethodCartToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -231,9 +210,6 @@ export const cartSlice = createSlice({
   reducers: {
     cartReset: (state) => initialState,
     clearCart: (state) => {
-      // localStorage.removeItem('__cart')
-      // localStorage.removeItem('__shippingAddress')
-      // localStorage.removeItem('__paymentMethod')
       state.cartItems = []
       state.shippingAddress = {}
       state.paymentMethod = null
@@ -258,7 +234,6 @@ export const cartSlice = createSlice({
       })
       .addCase(getCart.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(getCartGuest.pending, (state) => {
@@ -266,11 +241,9 @@ export const cartSlice = createSlice({
       })
       .addCase(getCartGuest.fulfilled, (state, action) => {
         state.loading = false;
-        // state.cartItems = action.payload;
       })
       .addCase(getCartGuest.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(resetCartOnProductDelete.pending, (state) => {
@@ -282,7 +255,6 @@ export const cartSlice = createSlice({
       })
       .addCase(resetCartOnProductDelete.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(addItemToCart.pending, (state) => {
@@ -294,12 +266,10 @@ export const cartSlice = createSlice({
       })
       .addCase(addItemToCart.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(addItemToCartGuest.pending, (state) => {
         state.loading = false;
-      //   state.loading = true;
       })
       .addCase(addItemToCartGuest.fulfilled, (state, action) => {
         state.loading = false;
@@ -307,7 +277,6 @@ export const cartSlice = createSlice({
       })
       .addCase(addItemToCartGuest.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(updateItemInCart.pending, (state) => {
@@ -319,7 +288,6 @@ export const cartSlice = createSlice({
       })
       .addCase(updateItemInCart.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(removeFromCart.pending, (state) => {
@@ -331,12 +299,10 @@ export const cartSlice = createSlice({
       })
       .addCase(removeFromCart.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(removeFromCartGuest.pending, (state) => {
         state.loading = false;
-        // state.loading = true;
       })
       .addCase(removeFromCartGuest.fulfilled, (state, action) => {
         state.loading = false;
@@ -344,7 +310,6 @@ export const cartSlice = createSlice({
       })
       .addCase(removeFromCartGuest.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(shippingAddressForCart.pending, (state) => {
@@ -356,7 +321,6 @@ export const cartSlice = createSlice({
       })
       .addCase(shippingAddressForCart.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(paymentMethodForCart.pending, (state) => {
@@ -368,7 +332,6 @@ export const cartSlice = createSlice({
       })
       .addCase(paymentMethodForCart.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
   }

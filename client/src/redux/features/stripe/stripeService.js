@@ -1,5 +1,4 @@
 import api from "../../../utils/api";
-import { refundOrder as refundOrderSlice } from "../order/orderSlice";
 
 const setCard = async (card) => {
   return card;
@@ -49,7 +48,6 @@ const getStripeCharge = async (chargeId) => {
 const refundCharge = async (orderId, userId, stripePaymentId, amount, thunkAPI) => {
   const chargeData = { orderId, userId, stripePaymentId, amount };
   await api.post(`/payment/refund-charge/order/${orderId}`, chargeData);
-  // thunkAPI.dispatch(refundOrderSlice());
 };
 
 const stripeService = {

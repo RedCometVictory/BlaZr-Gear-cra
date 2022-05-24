@@ -15,9 +15,6 @@ export const createProductForm = (formData) => {
 export const updateProductForm = (formData) => {
   let data = new FormData();
 
-  console.log("updateing pro9ducct serviced data")
-  console.log("formData")
-  console.log(formData)
   formData.name && data.append("name", formData.name);
   formData.brand && data.append("brand", formData.brand);
   formData.category && data.append("category", formData.category);
@@ -26,8 +23,6 @@ export const updateProductForm = (formData) => {
   formData.count_in_stock && data.append("count_in_stock", formData.count_in_stock);
   formData.image_url && data.append("image_url", formData.image_url);
 
-  console.log("serviced data")
-  console.log(data)
   return data;
 };
 

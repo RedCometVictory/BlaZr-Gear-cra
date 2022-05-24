@@ -4,26 +4,18 @@ const getCart = async () => {
   const res = await api.get('/cart/me');
   let result = res.data.data.cartItems;
   return result;
-  // dispatch(setAlert('Failed to get cart from db.', 'danger'));
-  //   const errors = err.response.data.errors;
-
-  //   if (errors) {
-  //     errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-  //   }
 };
 
 const getCartGuest = async (currentCart) => {
   let result = currentCart;
   // const res = await api.get('/cart/me');
   // const result = res.data.data;
-  // dispatch(setAlert('Failed to get guest cart.', 'danger'));
   return result;
 };
 
 const resetCartOnProductDelete = async (match, currCartItems) => {
     localStorage.setItem('__cart', JSON.stringify(match));
     return match;
-    // dispatch(setAlert('Failed to reset guest cart.', 'danger'));
 };
 
 const addItemToCart = async (prod_id, qty, currCartItems) => {
@@ -40,7 +32,6 @@ const addItemToCart = async (prod_id, qty, currCartItems) => {
     localStorage.setItem('__cart', JSON.stringify(currCartItems));
     return currCartItems;
   }
-  // dispatch(setAlert('Failed to add to cart.', 'danger'));
 };
 
 const addItemToCartGuest = async (prod_id, qty, currCartItems) => {
@@ -57,7 +48,6 @@ const addItemToCartGuest = async (prod_id, qty, currCartItems) => {
     localStorage.setItem('__cart', JSON.stringify(currCartItems));
     return currCartItems;
   }
-  // dispatch(setAlert('Failed to add to cart.', 'danger'));
 };
 
 const updateItemInCart = async (prod_id, cartQty, currCartItems) => {

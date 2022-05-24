@@ -11,7 +11,6 @@ const initialState = {
   error: [],
 };
 
-// * works
 export const getAllImages = createAsyncThunk(
   'image/get/all',
   async ({pageNumber, itemsPerPage}, thunkAPI) => {
@@ -25,13 +24,11 @@ export const getAllImages = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to retrieve images.", {theme: "colored", toastId: "ImageToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const getImageDetails = createAsyncThunk(
   'image/get/detail',
   async (image_id, thunkAPI) => {
@@ -45,12 +42,11 @@ export const getImageDetails = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list image details.", {theme: "colored", toastId: "ImageToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
-// * works
+
 export const deleteImage = createAsyncThunk(
   'image/delete',
   async ({image_id, navigate}, thunkAPI) => {
@@ -64,7 +60,6 @@ export const deleteImage = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to delete image.", {theme: "colored", toastId: "ImageToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -89,7 +84,6 @@ export const imageSlice = createSlice({
       })
       .addCase(getAllImages.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(getImageDetails.pending, (state) => {
@@ -101,7 +95,6 @@ export const imageSlice = createSlice({
       })
       .addCase(getImageDetails.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(deleteImage.pending, (state) => {
@@ -113,7 +106,6 @@ export const imageSlice = createSlice({
       })
       .addCase(deleteImage.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
   }

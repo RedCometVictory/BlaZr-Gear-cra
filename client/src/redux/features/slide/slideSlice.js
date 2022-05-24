@@ -9,7 +9,6 @@ const initialState = {
   error: [],
 };
 
-// * works
 export const getAllSlides = createAsyncThunk(
   'slide/getAll',
   async (_, thunkAPI) => {
@@ -23,13 +22,11 @@ export const getAllSlides = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to retrieve slideshow.", {theme: "colored", toastId: "getSlideToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const getSlideDetails = createAsyncThunk(
   'slide/get/details',
   async (slide_id, thunkAPI) => {
@@ -43,13 +40,11 @@ export const getSlideDetails = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to list slide details.", {theme: "colored", toastId: "getSlideToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const createSlide = createAsyncThunk(
   'slide/create',
   async ({slideForm, navigate}, thunkAPI) => {
@@ -63,13 +58,11 @@ export const createSlide = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to create slide.", {theme: "colored", toastId: "createSlideToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const updateSlide = createAsyncThunk(
   'slide/update',
   async ({slide_id, slideForm, navigate}, thunkAPI) => {
@@ -83,13 +76,11 @@ export const updateSlide = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to update slide.", {theme: "colored", toastId: "updateSlideToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-// * works
 export const deleteSlide = createAsyncThunk(
   'slide/delete',
   async ({slide_id, navigate}, thunkAPI) => {
@@ -103,7 +94,6 @@ export const deleteSlide = createAsyncThunk(
         err.message ||
         err.toString()
       toast.error("Failed to delete slide.", {theme: "colored", toastId: "deleteSlideToastId"});
-      // toast.error(message, {theme: "colored"});
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -126,7 +116,6 @@ export const slideSlice = createSlice({
       })
       .addCase(getAllSlides.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(getSlideDetails.pending, (state) => {
@@ -138,7 +127,6 @@ export const slideSlice = createSlice({
       })
       .addCase(getSlideDetails.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(createSlide.pending, (state) => {
@@ -150,7 +138,6 @@ export const slideSlice = createSlice({
       })
       .addCase(createSlide.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(updateSlide.pending, (state) => {
@@ -163,7 +150,6 @@ export const slideSlice = createSlice({
       })
       .addCase(updateSlide.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
       .addCase(deleteSlide.pending, (state) => {
@@ -175,7 +161,6 @@ export const slideSlice = createSlice({
       })
       .addCase(deleteSlide.rejected, (state, action) => {
         state.loading = false;
-        // state.cartItems = null;
         state.error = action.payload;
       })
   }

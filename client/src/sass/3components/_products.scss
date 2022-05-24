@@ -54,10 +54,10 @@
     right: 10px;
   }
   &__card-title {
-    background-color: var(--bg-panel-02);
+    // background-color: var(--bg-panel-02);
     padding: 2px 4px 27px 4px;
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 90%, 0 80%);
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 80%);
+    // -webkit-clip-path: polygon(0 0, 100% 0, 100% 90%, 0 80%);
+    // clip-path: polygon(0 0, 100% 0, 100% 90%, 0 80%);
   }
   &__title {
     text-align: center;
@@ -117,9 +117,6 @@
     &__card-body {
       padding: 0 2px 0 2px;
     }
-    &__card-title {
-      background-color: var(--bg-panel-02);
-    }
   }
 }
 
@@ -137,9 +134,6 @@
     }
     &__card-body {
       padding: 0 2px 0 2px;
-    }
-    &__card-title {
-      background-color: var(--bg-panel-02);
     }
   }
 }

@@ -34,23 +34,15 @@ const Payment = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       toast.warn('Please sign in to continue with payment.', {theme: 'colored', toastId: "signInToastId"});
-      console.log("navigate to login0")
       navigate('/login');
     }
     if (cartItems.length === 0 && !isProcessing && !sdkReady) navigate('/cart');
-    // if (cartItems.length === 0) navigate('/cart');
   }, []);
-  // if (cartItems.length === 0 && !isProcessing) {
-  //   console.log("navigate to cart")
-  //   navigate('/cart');
-  // }
 
   if (!sdkReady && !isProcessing && (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress)) {
-    console.log("seems to go here after submission of purchase via payhpal")
-    console.log("navigate to shipping address")
     navigate("/shipping-address");
   }
-  // if (cartItems.length === 0) navigate('/cart');
+
   // *** PAYPAL INTEGRATION ***
   useEffect(() => {
     if (paymentMethod === 'PayPal' && hasMounted && !sdkReady) {
@@ -59,7 +51,6 @@ const Payment = () => {
         createOrder: async function () {
           return await api.post('/payment/paypal-checkout', { cartItems })
           .then(res => {
-            console.log("setting proceess to true")
             setIsProcessing(true)
               return res.data.id;
           })
@@ -77,7 +68,6 @@ const Payment = () => {
                 orderType: "PayPal"
               }
               dispatch(createOrder(orderFormData));
-              console.log("NAVIGATE TO success")
               navigate('/success')
             })
         },
@@ -93,12 +83,6 @@ const Payment = () => {
   if (!hasMounted) {
     return null;
   }
-
-  // if (!isProcessing && (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress)) {
-  //   console.log("seems to go here after submission of purchase via payhpal")
-  //   console.log("navigate to shipping address")
-  //   navigate("/shipping-address");
-  // }
 
   // *** CALCULATE TOTALS ***
   let price = {};
@@ -156,8 +140,6 @@ const Payment = () => {
       const errors = err.response.data.errors;
 
       if (errors) {
-        console.log("payment errors")
-        console.log(errors)
         console.error(errors)
         errors.forEach(error => toast.error(error.msg, {theme: 'colored'}));
       }
@@ -247,7 +229,6 @@ const Payment = () => {
       if (addCardAndPay && !guestCheckout && !singlePay) {
         if (!isAuthenticated) {
           toast.error('Login or create account in order to save card and complete order.',{theme: 'colored', toastId: acctToastId});
-          console.log("navigate to login2")
           return navigate('/login');
         }
         description = "Card saved. Single purchase.";
@@ -258,12 +239,10 @@ const Payment = () => {
       if (singlePay && !guestCheckout && !addCardAndPay) {
         if (!isAuthenticated) {
           toast.error('Login or create account in order to save card and complete order.', {theme: 'colored', toastId: acctToastId});
-          console.log("navigate to login3")
           return navigate('/login');
         }
         if (!cardToUse) {
           toast.error('Login or create account in order to save card and complete order.', {theme: 'colored', toastId: acctToastId});
-          console.log("navigate to login4")
           return navigate('/login');
         };
         description = "Purchase made with saved card.";
@@ -282,7 +261,6 @@ const Payment = () => {
 
         dispatch(createOrder(orderFormData));
         setIsProcessing(false); // enables btn
-        console.log("navigate to success 2")
         return navigate('/success')
       }
       const cardElem = elements.getElement(CardElement);
@@ -330,7 +308,6 @@ const Payment = () => {
 
       dispatch(createOrder(orderFormData));
       setIsProcessing(false); // enables btn
-      console.log("navigate to success 3")
       navigate('/success')
     } catch (err) {
       setIsProcessing(false); // enables btn
@@ -340,8 +317,7 @@ const Payment = () => {
     }
   }
 
-  return (
-    <>
+  return (<>
     {paymentMethod ? (
       <form onSubmit={(e) => orderPaymentHandler(e)}>
         <div className="payments__header">
@@ -543,10 +519,8 @@ const Payment = () => {
         </div>
       </form>
     ) : (
-      <></>
+      <Navigate to="/confirm-order" />
     )}
-    </>
-  )
+  </>)
 }
 export default Payment;
-// {/* <Navigate to="/confirm-order" /> */}

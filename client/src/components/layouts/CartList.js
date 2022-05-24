@@ -9,7 +9,6 @@ import CartItem from '../../components/cart/CartItem';
 import Spinner from '../layouts/Spinner';
 import useClickOutside from '../../hooks/useClickOutside';
 
-// TODO: considering implementation in future update.
 const CartList = ({showCart, setShowCart, cartItems}) => {
 // const CartList = forwardRef((props, ref)) => {
 // const CartList = () => {

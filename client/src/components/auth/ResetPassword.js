@@ -22,7 +22,6 @@ const ResetPassword = () => {
     password: '', password2: ''
   })
 
-  // TODO --- get token and email as query values
   useEffect(() => {
     dispatch(verifyPassword({token, email, navigate}))
   }, [dispatch]);

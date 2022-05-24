@@ -29,7 +29,6 @@ router.get('/admin/:order_id', authJWT, admin, getOrderByIdAdmin);
 // @access   Private TODO need validation on inputss
 router.post('/', authJWT, createOrder);
 
-// TODO: consider removing
 // @route    POST /orders/:order_id/payment
 // @desc     User updates payment of order.
 // @access   Private

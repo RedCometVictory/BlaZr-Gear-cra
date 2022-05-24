@@ -38,11 +38,11 @@ function accessTokenGenerator (user_id, role, cart_id) {
     }
   }
   return jwt.sign(
-    payload, JWT_SECRET, { expiresIn: '30s' }, // 30secs
+    // payload, JWT_SECRET, { expiresIn: '30s' }, // 30secs
     // payload, JWT_SECRET, { expiresIn: '180s' }, // 3m
     // payload, JWT_SECRET, { expiresIn: '1800s' }, //30m
     // payload, JWT_SECRET, { expiresIn: "5 days" }
-    // payload, JWT_SECRET, { expiresIn: "5d" }
+    payload, JWT_SECRET, { expiresIn: "5d" }
   );
 };
 

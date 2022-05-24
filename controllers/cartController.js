@@ -6,12 +6,7 @@ const pool = require("../config/db");
 // Private
 exports.getCart = async (req, res, next) => {
   const { id, cartID } = req.user;
-  let cartSubtotal;
-  let cartTaxes; // set to 0.11 ~ 11%
-  let shippingCharge;
-  let cartShippingPrice;
-  let cartTotalPrice;
-  
+
   try {
     const userCart = await pool.query(
       'SELECT C.id AS cart_id, C.user_id AS cartUserID, P.*, CI.quantity, CI.id AS cartItemID FROM carts AS C JOIN cart_items AS CI ON C.id = CI.cart_id JOIN products AS P ON CI.product_id = P.id WHERE CI.cart_id = $1 AND C.user_id = $2;', [cartID, id]
@@ -42,6 +37,11 @@ exports.addCartItem = async (req, res, next) => {
   const { id, cartID } = req.user;
   const { product_id, quantity } = req.body;
   try {
+    let cartSubtotal;
+    let cartTaxes; // set to 0.11 ~ 11%
+    let shippingCharge;
+    let cartShippingPrice;
+    let cartTotalPrice;
     const addToCart = await pool.query(
       'INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ($1, $2, $3) ON CONFLICT (cart_id, product_id) DO UPDATE SET quantity = cart_items.quantity + 1 RETURNING *;', [cartID, product_id, quantity]
     );

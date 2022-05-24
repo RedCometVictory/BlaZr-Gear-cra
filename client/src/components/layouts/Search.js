@@ -8,25 +8,13 @@ const Search = () => {
 
   const searchHandler = (e) => {
     e.preventDefault();
-    console.log("search")
-    console.log(keyword)
     if (keyword.trim()) {
       navigate(`/shop?keyword=${keyword}`);
-      // navigate(`/search/${keyword}`);
-      // setKeyword('');
+      // setKeyword('')
     } else {
       navigate(`/shop`);
     };
   };
-
-  /*
-  const navigate = useNavigate();
-  const [query, setQuery] = useState('');
-  const submitHandler = (e) => {
-    e.preventDefault();
-    navigate(query ? `/search/?query=${query}` : '/search');
-  };
-  */
 
   return (
     <section className="search">

@@ -379,9 +379,6 @@ exports.makePayPalPayment = async (req, res, next) => {
 // /payment/refund-paypal/order/:order_id
 // private / Admin
 exports.refundPayPalPayment = async (req, res, next) => {
-  console.log("==============================")
-  console.log("req.body")
-  console.log(req.body)
   let {orderId, userId, paypalPaymentId, paypalCaptureId, amount } = req.body;
   try {
     const refundedAtDate = new Date().toString().slice(0,10);
@@ -492,31 +489,11 @@ exports.deleteCard = async (req, res, next) => {
   }
 };
 
-
-// --------------------------------------------------
-// ##################################################
-// ADMIN
-// exports.getStripeUser = async (req, res, next) => {
-//   const {stripeCustId} = req.body;
-//   try {
-//     const customers = await stripe.customers.retrieve(stripeCustId)
-//     return res.status(200).json({
-//       status: "Listing customers who use stripe.",
-//       data: {
-//         customers
-//       }
-//     });
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).send("Server error...");
-//   }
-// };
-
-// TODO: consider removing / not used
 // /payment/show-stripe-charge
 // get stripe info of particular charge made
 // Private / Admin
 exports.getStripeCharge = async (req, res, next) => {
+  // const {stripeCustId} = req.body;
   const {chargeId, stripeId} = req.body;
   try {
     const charge = await stripe.charges.retrieve(chargeId);
@@ -524,7 +501,7 @@ exports.getStripeCharge = async (req, res, next) => {
     return res.status(200).json({
       status: "Listing customers who use stripe.",
       data: {
-        charge
+        charge // customers
       }
     });
   } catch (err) {
@@ -553,7 +530,6 @@ exports.refundCharge = async (req, res, next) => {
     let email = userEmail.rows[0].user_email;
 
     await purchaseRefundMail(email, orderId, firstName);
-
     // if successful set is_refunded to true and refunded to a date and order status to refunded
     // const refundedAtDate = new Date().toString();
     // const refundOrder = await pool.query(

@@ -108,7 +108,6 @@ exports.registerUser = async (req, res, next) => {
     };
     // sign reftoken id, put into cookie, verify upon /refresh-token
     const signedRefreshToken = refreshTokenGenerator(newUser.rows[0].id, newUser.rows[0].role, refreshToken);
-
     const refreshOptions = refreshTokenCookieOptions();
 
     // generate refresh token cookie to client
@@ -405,11 +404,8 @@ exports.authRefreshToken = async (req, res, next) => {
 // /auth/logout
 // Public
 exports.authLogout = async (req, res, next) => {
-  const { refresh } = req.cookies; 
-  console.log("++++++++++++LOGGING OUT++++++++++++++")
+  const { refresh } = req.cookies;
   // verify token to get payload...
-  console.log(req.cookies)
-  console.log(req.user)
   try {
     const verifiedRefToken = await validateRefreshToken(refresh);
 
