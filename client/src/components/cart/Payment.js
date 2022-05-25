@@ -36,8 +36,8 @@ const Payment = () => {
       toast.warn('Please sign in to continue with payment.', {theme: 'colored', toastId: "signInToastId"});
       navigate('/login');
     }
-    if (cartItems.length === 0 && !isProcessing && !sdkReady) navigate('/cart');
   }, []);
+  if (cartItems.length === 0 && !isProcessing && !sdkReady) navigate('/cart');
 
   if (!sdkReady && !isProcessing && (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress)) {
     navigate("/shipping-address");
@@ -519,8 +519,19 @@ const Payment = () => {
         </div>
       </form>
     ) : (
-      <Navigate to="/confirm-order" />
+      <div className="payments__container">
+        <div className="payments__header-information redirect-container">
+          <div className="redirect">
+            <Link to="/confirm-order">
+              <div className="btn btn-primary">
+                Please Select Payment Method
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
     )}
   </>)
 }
 export default Payment;
+//<Navigate to="/confirm-order" />
