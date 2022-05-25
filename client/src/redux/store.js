@@ -21,7 +21,8 @@ const store = configureStore({
     slide: slideReducer,
     stripe: stripeReducer,
     user: userReducer
-  }
+  },
+  devTools: false, // disable devtools for production
 });
 let currentState = store.getState();
 
