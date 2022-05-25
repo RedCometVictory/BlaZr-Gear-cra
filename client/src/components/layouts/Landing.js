@@ -23,8 +23,9 @@ const Landing = () => {
   
   
   useEffect(() => {
-    dispatch(getAllSlides());
-    dispatch(listTopProducts());
+    Promise.all([dispatch(getAllSlides()), dispatch(listTopProducts())])
+    // dispatch(getAllSlides());
+    // dispatch(listTopProducts());
   }, [dispatch]);
 
   
