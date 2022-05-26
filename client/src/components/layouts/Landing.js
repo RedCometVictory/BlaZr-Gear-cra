@@ -23,8 +23,8 @@ const Landing = () => {
   
   
   useEffect(() => {
-    Promise.all([dispatch(getAllSlides()), dispatch(listTopProducts())])
-    // dispatch(getAllSlides());
+    // Promise.all([dispatch(getAllSlides()), dispatch(listTopProducts())])
+    dispatch(getAllSlides());
     // dispatch(listTopProducts());
   }, [dispatch]);
 
