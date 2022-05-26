@@ -8,7 +8,8 @@ const api = Axios.create({
   // baseURL: 'http://localhost:5000/api', // ---
   // baseURL: `${process.env.HEROKU_DOMAIN}/api`,
   // production
-  baseURL: `https://blazrgearstore.herokuapp.com/api`, // ---
+  // baseURL: `https://blazrgearstore.herokuapp.com/api`, // ---
+  baseURL: `/api`, // ---
   // timeout:5000,
   timeout:25000,
   // 'Content-Type': 'multipart/form-data'
