@@ -1,7 +1,7 @@
 require("dotenv").config();
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
-const baseURL = process.env.NODE_ENV === "production" ? 'https://blazrgear.herokuapp.com/' : 'http://localhost:3000';
+const baseURL = process.env.NODE_ENV === "production" ? 'https://blazrgearstore.herokuapp.com/' : 'http://localhost:3000';
 
 
 const EMAIL_ADDRESS = process.env.EMAIL_ADDRESS;
