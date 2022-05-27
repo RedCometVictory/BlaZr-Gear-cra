@@ -15,7 +15,7 @@ const HOST = 'https://blazrgearstore.herokuapp.com';
 let whiteList;
 //  'https://www.sandbox.paypal.com'
 if (process.env.NODE_ENV === 'production') {
-  whiteList = [HOST, 'https://www.sandbox.paypal.com', 'https://api.mapbox.com/'];
+  whiteList = [HOST, 'https://www.sandbox.paypal.com/', 'https://api.mapbox.com/'];
 }
 
 if (process.env.NODE_ENV === 'development') {
