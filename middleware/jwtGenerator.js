@@ -94,8 +94,9 @@ function refreshTokenCookieOptions() {
     // expires: new Date(Date.now() + 10*60*1000), // 10min
     expires: new Date(Date.now() + 7*24*60*60*1000), //7d
     // secure: NODE_ENV === 'production' ? true : false,
-    secure: NODE_ENV === 'production' ? true : true,
-    httpOnly: NODE_ENV === 'production' ? true : false,
+    secure: NODE_ENV === 'production' ? true : true, // chrome requires secure to be true
+    // httpOnly: NODE_ENV === 'production' ? true : false, // use this option when https is available
+    httpOnly: NODE_ENV === 'production' ? false : false,
     sameSite: NODE_ENV === 'production' ? "strict" : "none",
     path: '/'
     // * Ensure cookie only interact with specified url, prevents 401 loop when err occurs but auth still valid
