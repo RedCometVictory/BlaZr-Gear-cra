@@ -210,7 +210,7 @@ export const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
-        state.userInfo = action.payload.userInfo;
+        // state.userInfo = action.payload.userInfo;
         toast.success("Successfully registered. Welcome.", {theme: "colored", toastId: "registerSuccessToastId"});
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -225,7 +225,7 @@ export const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
-        state.userInfo = action.payload.userInfo;
+        // state.userInfo = action.payload.userInfo;
         toast.success("Welcome!", {theme: "colored", toastId: "welcomeToastId"});
       })
       .addCase(loginUser.rejected, (state, action) => {
