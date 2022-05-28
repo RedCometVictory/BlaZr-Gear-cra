@@ -97,7 +97,8 @@ function refreshTokenCookieOptions() {
     secure: NODE_ENV === 'production' ? true : true, // chrome requires secure to be true
     // httpOnly: NODE_ENV === 'production' ? true : false, // use this option when https is available
     httpOnly: NODE_ENV === 'production' ? false : false,
-    sameSite: NODE_ENV === 'production' ? "strict" : "none",
+    // sameSite: NODE_ENV === 'production' ? "strict" : "none",
+    sameSite: NODE_ENV === 'production' ? "lax" : "none",
     path: '/'
     // * Ensure cookie only interact with specified url, prevents 401 loop when err occurs but auth still valid
     // path: '/api/auth/refresh-token'

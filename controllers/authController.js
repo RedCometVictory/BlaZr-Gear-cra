@@ -97,21 +97,21 @@ exports.registerUser = async (req, res, next) => {
     // hide token from client (already added to db)
     newUser.rows[0].user_password = undefined;
     
-    const refreshToken = refreshTokenString();
+    // const refreshToken = refreshTokenString();
     // set refresh token "id" to db, used for matching to refresh cookie token, if matched create new ref token and save it to db, if no match, logout user, set reftoken in db to null & clear the reftoken cookie
-    const setRefreshToken = await pool.query(
-      'UPDATE users SET refresh_token = $1 WHERE user_email = $2 RETURNING *;', [refreshToken, newUser.rows[0].user_email]
-    );
+    // const setRefreshToken = await pool.query(
+    //   'UPDATE users SET refresh_token = $1 WHERE user_email = $2 RETURNING *;', [refreshToken, newUser.rows[0].user_email]
+    // );
 
-    if (!setRefreshToken.rows.length > 0) {
-      return res.status(401).json({ errors: [{ msg: "Unauthorized. Failed to update refresh token." }] });
-    };
+    // if (!setRefreshToken.rows.length > 0) {
+    //   return res.status(401).json({ errors: [{ msg: "Unauthorized. Failed to update refresh token." }] });
+    // };
     // sign reftoken id, put into cookie, verify upon /refresh-token
-    const signedRefreshToken = refreshTokenGenerator(newUser.rows[0].id, newUser.rows[0].role, refreshToken);
-    const refreshOptions = refreshTokenCookieOptions();
+    // const signedRefreshToken = refreshTokenGenerator(newUser.rows[0].id, newUser.rows[0].role, refreshToken);
+    // const refreshOptions = refreshTokenCookieOptions();
 
     // generate refresh token cookie to client
-    res.cookie('refresh', signedRefreshToken, refreshOptions);
+    // res.cookie('refresh', signedRefreshToken, refreshOptions);
     // return access token to client
     res.status(200).json({ 
       status: "Success! Account created.",
@@ -156,25 +156,25 @@ exports.authValidToken = async (req, res, next) => {
     // create access & refresh token, save refToken to db
     const jwtToken = accessTokenGenerator(user.rows[0].id, user.rows[0].role, user.rows[0].cart_id);
 
-    const refreshToken = refreshTokenString();
-    const setRefreshToken = await pool.query(
-      'UPDATE users SET refresh_token = $1 WHERE user_email = $2 RETURNING *;', [refreshToken, user.rows[0].user_email]
-    );
+    // const refreshToken = refreshTokenString();
+    // const setRefreshToken = await pool.query(
+    //   'UPDATE users SET refresh_token = $1 WHERE user_email = $2 RETURNING *;', [refreshToken, user.rows[0].user_email]
+    // );
 
-    if (!setRefreshToken.rows.length > 0) {
-      return res.status(401).json({ errors: [{ msg: "Unauthorized. Failed to update refresh token." }] });
-    };
+    // if (!setRefreshToken.rows.length > 0) {
+    //   return res.status(401).json({ errors: [{ msg: "Unauthorized. Failed to update refresh token." }] });
+    // };
 
     // sign reftoken id, put into cookie, verify upon /refresh-token
-    const signedRefreshToken = refreshTokenGenerator(user.rows[0].id, user.rows[0].role, refreshToken);
+    // const signedRefreshToken = refreshTokenGenerator(user.rows[0].id, user.rows[0].role, refreshToken);
 
-    const refreshOptions = refreshTokenCookieOptions();
+    // const refreshOptions = refreshTokenCookieOptions();
 
     // keep password from client by 'overriding it'
     user.rows[0].user_password = undefined;
 
     // generate refresh token cookie to client
-    res.cookie('refresh', signedRefreshToken, refreshOptions);
+    // res.cookie('refresh', signedRefreshToken, refreshOptions);
 
     return res.json({
       status: "Successful login!",

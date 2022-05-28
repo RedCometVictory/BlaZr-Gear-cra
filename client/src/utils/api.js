@@ -40,39 +40,39 @@ api.interceptors.request.use(
 );
 
 //*** ORIGINAL REQQUEST
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    //extracting response and config objects
-    const { response, config } = error;
-    //checking if error is Aunothorized error
-    let originalRequest = config;
+// api.interceptors.response.use(
+//   (response) => response,
+//   async (error) => {
+//     //extracting response and config objects
+//     const { response, config } = error;
+//     //checking if error is Aunothorized error
+//     let originalRequest = config;
 
-    if (response?.status === 401 && originalRequest.url.includes("auth/refresh-token")) {
-      // stop loop
-      store.dispatch(logout({navigate: null, history}));
-      return Promise.reject(error);
-    }
-    if (response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const refResponse = await api.get("/auth/refresh-token");
-        let accessToken = refResponse.data.data.token;
-        if (accessToken) {
-          store.dispatch(refreshAccessToken(accessToken));
-          config.headers["Authorization"] = "Bearer " + accessToken;
-        }
-        //with new token retry original request
-        return api(originalRequest);
-      } catch (err) {
-        // store.dispatch(logout())
-        if (err.response && err.response.data) {
-          return Promise.reject(err.response.data);
-        }
-        return Promise.reject(err);
-      }
-    }
-    return Promise.reject(error)
-  }
-);
+//     if (response?.status === 401 && originalRequest.url.includes("auth/refresh-token")) {
+//       // stop loop
+//       store.dispatch(logout({navigate: null, history}));
+//       return Promise.reject(error);
+//     }
+//     if (response?.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true;
+//       try {
+//         const refResponse = await api.get("/auth/refresh-token");
+//         let accessToken = refResponse.data.data.token;
+//         if (accessToken) {
+//           store.dispatch(refreshAccessToken(accessToken));
+//           config.headers["Authorization"] = "Bearer " + accessToken;
+//         }
+//         //with new token retry original request
+//         return api(originalRequest);
+//       } catch (err) {
+//         // store.dispatch(logout())
+//         if (err.response && err.response.data) {
+//           return Promise.reject(err.response.data);
+//         }
+//         return Promise.reject(err);
+//       }
+//     }
+//     return Promise.reject(error)
+//   }
+// );
 export default api;
