@@ -114,14 +114,11 @@ exports.registerUser = async (req, res, next) => {
     // res.cookie('refresh', signedRefreshToken, refreshOptions);
     // return access token to client
 
-    // --- upload user data
-    const user = await pool.query("SELECT * FROM users WHERE id = $1;", [newUser.rows[0].id]);
-    
     res.status(200).json({ 
       status: "Success! Account created.",
       data: {
         token: jwtToken,
-        userInfo: user.rows[0]
+        userInfo: newUser.rows[0]
       }
     });
   } catch (err) {
@@ -137,12 +134,8 @@ exports.registerUser = async (req, res, next) => {
 exports.authValidToken = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    // ORIGINAL QUERY
-    // const user = await pool.query(
-    //   'SELECT U.*, C.id AS cart_id FROM users AS U JOIN carts AS C ON C.user_id = U.id WHERE U.user_email = $1;', [email]
-    // );
     const user = await pool.query(
-      'SELECT * FROM users WHERE id = $1;', [email]
+      'SELECT U.*, C.id AS cart_id FROM users AS U JOIN carts AS C ON C.user_id = U.id WHERE U.user_email = $1;', [email]
     );
 
     if (user.rows.length === 0) {
