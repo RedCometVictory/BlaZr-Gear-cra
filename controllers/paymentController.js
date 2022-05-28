@@ -12,7 +12,6 @@ const paypalClient = new paypalSDK.core.PayPalHttpClient(
   new Environment(process.env.PAYPAL_CLIENT_ID, process.env.PAYPAL_SECRET)
 );
 
-// class="[`billy ${cartActive ? 'billy-active' : ''}`]"
 // *** tested / works in App
 const calculateTotalAmount = async (cartItems) => {
   if (cartItems.length === 0) {
