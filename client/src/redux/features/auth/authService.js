@@ -19,15 +19,15 @@ const loadUser = async (thunkAPI) => {
 const registerUser = async (formRegData, thunkAPI) => {
   const res = await api.post('/auth/register', formRegData);
   const result = res.data.data;
-  return thunkAPI.dispatch(loadUserSlice())
-  // return result;
+  // return thunkAPI.dispatch(loadUserSlice())
+  return result;
 };
 
 const loginUser = async (formData, thunkAPI) => {
   const res = await api.post('/auth/login', formData);
   let result = res.data.data;
-  return thunkAPI.dispatch(loadUserSlice())
-  // return result;
+  // return thunkAPI.dispatch(loadUserSlice())
+  return result;
 };
 
 const logout = async (navigate, history = null, thunkAPI) => {
