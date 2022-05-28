@@ -20,6 +20,7 @@ const registerUser = async (formRegData, thunkAPI) => {
   const res = await api.post('/auth/register', formRegData);
   const result = res.data.data;
   // return thunkAPI.dispatch(loadUserSlice())
+  localStorage.setItem("token", JSON.stringify(result.token));
   return result;
 };
 
@@ -27,6 +28,7 @@ const loginUser = async (formData, thunkAPI) => {
   const res = await api.post('/auth/login', formData);
   let result = res.data.data;
   // return thunkAPI.dispatch(loadUserSlice())
+  localStorage.setItem("token", JSON.stringify(result.token));
   return result;
 };
 

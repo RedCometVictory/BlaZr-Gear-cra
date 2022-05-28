@@ -52,7 +52,7 @@ const AdminOrderDetail = lazy(() => import('./components/admin/orders/AdminOrder
 const App = () => {
   useEffect (() => {
     if (localStorage.token) setAuthToken(localStorage.token);
-    if (localStorage.token) store.dispatch(loadUser());
+    store.dispatch(loadUser());
     // logout user from all tabs if logged out from one tab
     window.addEventListener('storage', () => {
       if (!localStorage.token) store.dispatch(logout());

@@ -208,6 +208,7 @@ export const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
+        state.token = action.payload.token;
         state.loading = false;
         state.isAuthenticated = true;
         state.userInfo = action.payload.userInfo;
@@ -223,6 +224,7 @@ export const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        state.token = action.payload.token;
         state.loading = false;
         state.isAuthenticated = true;
         state.userInfo = action.payload.userInfo;
