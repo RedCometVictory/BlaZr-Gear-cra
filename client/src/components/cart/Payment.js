@@ -45,6 +45,8 @@ const Payment = () => {
 
   // *** PAYPAL INTEGRATION ***
   useEffect(() => {
+    console.log("**** cartItems ****")
+    console.log(cartItems)
     if (paymentMethod === 'PayPal' && hasMounted && !sdkReady) {
       setSdkReady(true);
       window.paypal.Buttons({
