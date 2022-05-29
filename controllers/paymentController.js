@@ -7,7 +7,7 @@ const { purchaseRefundMail } = require('../middleware/emailService');
 
 // LiveEnvironment = poduction build
 // SandboxEnvironment = testing build
-const Environment = process.env.NODE_ENV === "production" ? paypalSDK.core.SandboxEnvironment : paypalSDK.core.SandboxEnvironment;
+const Environment = process.env.NODE_ENV === "production" ? paypalSDK.core.LiveEnvironment : paypalSDK.core.SandboxEnvironment;
 const paypalClient = new paypalSDK.core.PayPalHttpClient(
   new Environment(process.env.PAYPAL_CLIENT_ID, process.env.PAYPAL_SECRET)
 );
