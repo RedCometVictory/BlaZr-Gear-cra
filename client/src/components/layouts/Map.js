@@ -174,7 +174,8 @@ const Map = () => {
     let shippingAddress = { fullname, email, address, zipcode, city, state, country, lat, lng };
     dispatch(shippingAddressForCart(shippingAddress));
     // dispatch(shippingAddressForCart({ fullname, email, address, zipcode, city, state, country, lat, lng }));
-    navigate('/confirm-order');
+    // navigate('/confirm-order'); // temp redirect until paypal err is fixed
+    navigate('/payment');
   }
 
   return mapboxApiKey ? (
