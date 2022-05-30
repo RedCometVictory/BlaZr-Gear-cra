@@ -44,39 +44,37 @@ const Payment = () => {
   }
 
   // *** PAYPAL INTEGRATION ***
-  useEffect(() => {
-    console.log("**** cartItems ****")
-    console.log(cartItems)
-    if (paymentMethod === 'PayPal' && hasMounted && !sdkReady) {
-      setSdkReady(true);
-      window.paypal.Buttons({
-        createOrder: async function () {
-          return await api.post('/payment/paypal-checkout', { cartItems })
-          .then(res => {
-            setIsProcessing(true)
-              return res.data.id;
-          })
-          .catch(e => {
-            console.error(e.error)
-          })
-        },
-        onApprove: async function (data, actions) {
-          return await actions.order.capture()
-            .then((orderData) => {
-              orderFormData.paymentInfo = {
-                id: orderData.id,
-                captureId: orderData.purchase_units[0].payments.captures[0].id,
-                status: orderData.status,
-                orderType: "PayPal"
-              }
-              dispatch(createOrder(orderFormData));
-              navigate('/success')
-            })
-        },
-      })
-      .render("#paypal")
-    }
-  }, [dispatch, paymentMethod, cartItems, hasMounted]);
+  // useEffect(() => {
+  //   if (paymentMethod === 'PayPal' && hasMounted && !sdkReady) {
+  //     setSdkReady(true);
+  //     window.paypal.Buttons({
+  //       createOrder: async function () {
+  //         return await api.post('/payment/paypal-checkout', { cartItems })
+  //         .then(res => {
+  //           setIsProcessing(true)
+  //             return res.data.id;
+  //         })
+  //         .catch(e => {
+  //           console.error(e.error)
+  //         })
+  //       },
+  //       onApprove: async function (data, actions) {
+  //         return await actions.order.capture()
+  //           .then((orderData) => {
+  //             orderFormData.paymentInfo = {
+  //               id: orderData.id,
+  //               captureId: orderData.purchase_units[0].payments.captures[0].id,
+  //               status: orderData.status,
+  //               orderType: "PayPal"
+  //             }
+  //             dispatch(createOrder(orderFormData));
+  //             navigate('/success')
+  //           })
+  //       },
+  //     })
+  //     .render("#paypal")
+  //   }
+  // }, [dispatch, paymentMethod, cartItems, hasMounted]);
 
   useEffect(() => {
     setHasMounted(true);
@@ -338,13 +336,13 @@ const Payment = () => {
                   </div>
                 </Link>
               </div>
-              <div className="option">
+              {/* <div className="option">
                 <Link to="/confirm-order">
                   <div className="btn btn-primary">
                     Edit Payment
                   </div>
                 </Link>
-              </div>
+              </div> */}
             </div>
           )}
           <div className="payments__header-information sidebar">

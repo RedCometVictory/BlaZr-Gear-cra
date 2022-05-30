@@ -31,7 +31,6 @@ const ConfirmOrder = lazy(() => import('./components/cart/ConfirmOrder'));
 const PaymentContainer = lazy(() => import('./components/cart/PaymentContainer'));
 const OrderSuccess = lazy(() => import('./components/cart/OrderSuccess'));
 const Map = lazy(() => import('./components/layouts/Map'));
-// import Map from '../layouts/Map';
 
 // ========================================
 

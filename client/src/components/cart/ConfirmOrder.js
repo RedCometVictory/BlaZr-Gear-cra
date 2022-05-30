@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { paymentMethodForCart } from '../../redux/features/cart/cartSlice';
@@ -43,49 +43,52 @@ const ConfirmOrder = () => {
   };
 
   return (
-    <section>
-      <h2>Payment Method</h2>
-      <p>Select one.</p>
-      <form className="admForm" onSubmit={onSubmit} >
-        <div className="admForm__inner-container">
-          <div className="admForm__section pay-layout">
-            <div className="admForm__group pay-method" onClick={() => onClickRadioSet('Stripe')}>
-              <label htmlFor="stripe" className="admForm__label">
-                Credit / Debit Card:
-              </label>
-              <input
-                type="radio"
-                id="stripe"
-                name="paymentMethod"
-                className=""
-                onChange={e => setPaymentMethod(e.target.value)}
-                value="Stripe"
-                checked={paymentMethod === 'Stripe'}
-                required
-              />
-            </div>
-            <div className="admForm__group pay-method" onClick={() => onClickRadioSet('PayPal')}>
-              <label htmlFor="paypal" className="admForm__label">PayPal: </label>
-              <input
-                type="radio"
-                id="paypal"
-                name="paymentMethod"
-                className=""
-                onChange={e => setPaymentMethod(e.target.value)}
-                value="PayPal"
-                checked={paymentMethod === 'PayPal'}
-                required
-              />
-            </div>
-          </div>
-        </div>
-        <div className="admForm__section">
-          <div className="admForm__submit-update">
-            <input type="submit" className="btn btn-primary btn-full-width admForm__submit" value="Save Payment Method" />
-          </div>
-        </div>
-      </form>
-    </section>
+    <Navigate to="/shipping-address" />
   )
+  // return (
+  //   <section>
+  //     <h2>Payment Method</h2>
+  //     <p>Select one.</p>
+  //     <form className="admForm" onSubmit={onSubmit} >
+  //       <div className="admForm__inner-container">
+  //         <div className="admForm__section pay-layout">
+  //           <div className="admForm__group pay-method" onClick={() => onClickRadioSet('Stripe')}>
+  //             <label htmlFor="stripe" className="admForm__label">
+  //               Credit / Debit Card:
+  //             </label>
+  //             <input
+  //               type="radio"
+  //               id="stripe"
+  //               name="paymentMethod"
+  //               className=""
+  //               onChange={e => setPaymentMethod(e.target.value)}
+  //               value="Stripe"
+  //               checked={paymentMethod === 'Stripe'}
+  //               required
+  //             />
+  //           </div>
+  //           <div className="admForm__group pay-method" onClick={() => onClickRadioSet('PayPal')}>
+  //             <label htmlFor="paypal" className="admForm__label">PayPal: </label>
+  //             <input
+  //               type="radio"
+  //               id="paypal"
+  //               name="paymentMethod"
+  //               className=""
+  //               onChange={e => setPaymentMethod(e.target.value)}
+  //               value="PayPal"
+  //               checked={paymentMethod === 'PayPal'}
+  //               required
+  //             />
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div className="admForm__section">
+  //         <div className="admForm__submit-update">
+  //           <input type="submit" className="btn btn-primary btn-full-width admForm__submit" value="Save Payment Method" />
+  //         </div>
+  //       </div>
+  //     </form>
+  //   </section>
+  // )
 }
 export default ConfirmOrder;

@@ -233,14 +233,14 @@
   &__btn-checkout {
     text-align: center;
     border-radius: 6px;
-    background-color: rgb(156, 2, 156);
+    background-color: var(--bg-panel);
     padding: 6px 0px 6px 0;
     &.checkout {
       width: 100%;
     }
     cursor: pointer;
     &:hover {
-      background-color: rgb(177, 0, 177);
+      background-color: var(--bg-panel-hover);
     }
   }
   &__charge-err {

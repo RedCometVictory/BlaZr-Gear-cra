@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { shippingAddressForCart } from '../../redux/features/cart/cartSlice';
+import { shippingAddressForCart, paymentMethodForCart } from '../../redux/features/cart/cartSlice';
 import { getUserProfile } from '../../redux/features/user/userSlice';
 
 const Shipping = () => {
@@ -38,9 +38,6 @@ const Shipping = () => {
       toast.info('Please provide an shipping address. Primary address is considered shipping address.', {theme: 'colored', toastId: addressToastId});
     };
     if (cartDetails.cartItems.length === 0) navigate('/cart');
-  }, [isAuthenticated]);
-
-  useEffect(() => {
     if(isAuthenticated && (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress)) {
       dispatch(getUserProfile());
     };
@@ -63,9 +60,7 @@ const Shipping = () => {
       submitHandler(e);
     }
   };
-// if (!shippingAddress.address || Object.keys(shippingAddress).length === 0 || !shippingAddress) {
-//       toast.info('Please provide an shipping address. Primary address is considered shipping address.', {theme: 'colored', toastId: addressToastId});
-//     };
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (isAuthenticated) {
@@ -87,7 +82,10 @@ const Shipping = () => {
     // dispatch(shippingAddressForCart({ fullname, email, address, zipcode, city, state, country, lat, lng }));
     let shippingAddress = { fullname, email, address, zipcode, city, state, country, lat, lng };
     dispatch(shippingAddressForCart(shippingAddress));
-    navigate('/confirm-order');
+    // Temp: until paypal err is resolved in prod app
+    dispatch(paymentMethodForCart("Stripe"));
+    // navigate('/confirm-order');
+    navigate('/payment');
   };
 
   const chooseMapLocation = () => {

@@ -21,6 +21,7 @@ const registerUser = async (formRegData, thunkAPI) => {
   const result = res.data.data;
   // return thunkAPI.dispatch(loadUserSlice())
   localStorage.setItem("token", JSON.stringify(result.token));
+  localStorage.setItem("__userInfo", JSON.stringify(result.userInfo));
   return result;
 };
 
@@ -29,6 +30,7 @@ const loginUser = async (formData, thunkAPI) => {
   let result = res.data.data;
   // return thunkAPI.dispatch(loadUserSlice())
   localStorage.setItem("token", JSON.stringify(result.token));
+  localStorage.setItem("__userInfo", JSON.stringify(result.userInfo));
   return result;
 };
 

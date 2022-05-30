@@ -293,8 +293,6 @@ exports.makePayment = async (req, res, next) => {
 exports.makePayPalPayment = async (req, res, next) => {
   // when in production (online) enable paypal to aquire actual payments (testing turned off)
   // keep paypal testing (sandbox) on, even online
-  console.log("^^^^^ req.body ^^^^^")
-  console.log(req.body)
   const { cartItems } = req.body;
 
   try {
