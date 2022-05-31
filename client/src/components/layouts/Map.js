@@ -9,7 +9,7 @@ import Geocoder from "react-map-gl-geocoder";
 import api from '../../utils/api';
 import axios from "axios";
 import Spinner from './Spinner';
-import { shippingAddressForCart } from '../../redux/features/cart/cartSlice';
+import { shippingAddressForCart, paymentMethodForCart } from '../../redux/features/cart/cartSlice';
 import mapboxgl from "mapbox-gl"; // This is a dependency of react-map-gl, even if not explicitly installed
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
@@ -173,6 +173,7 @@ const Map = () => {
     }
     let shippingAddress = { fullname, email, address, zipcode, city, state, country, lat, lng };
     dispatch(shippingAddressForCart(shippingAddress));
+    dispatch(paymentMethodForCart("Stripe"));
     // dispatch(shippingAddressForCart({ fullname, email, address, zipcode, city, state, country, lat, lng }));
     // navigate('/confirm-order'); // temp redirect until paypal err is fixed
     navigate('/payment');
