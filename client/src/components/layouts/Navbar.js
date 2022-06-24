@@ -52,7 +52,7 @@ const Navbar = () => {
   }
 
   const demoHandler = () => {
-    dispatch(demoUser(navigate));
+    dispatch(demoUser({navigate}));
   };
 
   // const showCartHandler = (value) => {
