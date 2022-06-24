@@ -104,7 +104,8 @@ const Navbar = () => {
   const guestLinks = (
     <>
     <li className="nav__link-item--secondary">
-      <Link to="#" onClick={demoHandler}>Try Demo</Link>
+      {/* <Link to="#" onClick={demoHandler}>Try Demo</Link> */}
+      <div onClick={demoHandler}>Try Demo</div>
     </li>
     <li className="nav__link-item--secondary">
       <Link to="/login">Login</Link>
