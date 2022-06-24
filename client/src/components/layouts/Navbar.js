@@ -51,7 +51,7 @@ const Navbar = () => {
     dispatch(logout({navigate, history: null}));
   }
 
-  const demoHandler = (e) => {
+  const demoHandler = () => {
     dispatch(demoUser(navigate));
   };
 
@@ -104,7 +104,7 @@ const Navbar = () => {
   const guestLinks = (
     <>
     <li className="nav__link-item--secondary">
-      <Link to="#" onClick={(e) => demoHandler(e)}>Try Demo</Link>
+      <Link to="#" onClick={demoHandler}>Try Demo</Link>
     </li>
     <li className="nav__link-item--secondary">
       <Link to="/login">Login</Link>
