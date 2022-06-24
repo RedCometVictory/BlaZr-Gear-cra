@@ -9,6 +9,8 @@ exports.authDemo = async (req, res, next) => {
   let email = process.env.DEMO_EMAIL;
   let password = process.env.DEMO_PASSWORD;
 
+  console.log(email)
+  console.log(password)
   try {
     const user = await pool.query(
       'SELECT U.*, C.id AS cart_id FROM users AS U JOIN carts AS C ON C.user_id = U.id WHERE U.user_email = $1;', [email]
@@ -34,6 +36,11 @@ exports.authDemo = async (req, res, next) => {
     const jwtToken = accessTokenGenerator(user.rows[0].id, user.rows[0].role, user.rows[0].cart_id);
     user.rows[0].user_password = undefined;
 
+    console.log("hello")
+    console.log("token")
+    console.log(jwtToken)
+    console.log("userInfo")
+    console.log(user.rows[0])
     return res.json({
       status: "Successful login! [Demo]",
       data: {

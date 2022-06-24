@@ -14,9 +14,10 @@ const initialState = {
 
 export const demoUser = createAsyncThunk(
   'auth/demo',
-  async ({navigate}, thunkAPI) => {
+  async (thunkAPI) => {
     try {
-      return await authService.demoUser(navigate, thunkAPI);
+      // return await authService.demoUser(navigate, thunkAPI);
+      return await authService.demoUser();
     } catch (err) {
       const message =
         (err.response &&

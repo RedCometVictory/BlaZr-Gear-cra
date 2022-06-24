@@ -6,12 +6,11 @@ import { orderReset } from "../order/orderSlice";
 import { loadUser as loadUserSlice, clearAuth } from "./authSlice";
 
 
-const demoUser = async (navigate) => {
+const demoUser = async () => {
   const res = await api.get('/auth/demo');
   let result = res.data.data;
   localStorage.setItem("token", JSON.stringify(result.token));
   localStorage.setItem("__userInfo", JSON.stringify(result.userInfo));
-  navigate.push("/");
   return result;
 };
 

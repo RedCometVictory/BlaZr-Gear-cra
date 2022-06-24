@@ -52,7 +52,7 @@ const Navbar = () => {
   }
 
   const demoHandler = () => {
-    dispatch(demoUser({navigate}));
+    dispatch(demoUser());
   };
 
   // const showCartHandler = (value) => {
@@ -104,8 +104,7 @@ const Navbar = () => {
   const guestLinks = (
     <>
     <li className="nav__link-item--secondary">
-      {/* <Link to="#" onClick={demoHandler}>Try Demo</Link> */}
-      <div onClick={demoHandler}>Try Demo</div>
+      <div onClick={() => demoHandler()}>Try Demo</div>
     </li>
     <li className="nav__link-item--secondary">
       <Link to="/login">Login</Link>
