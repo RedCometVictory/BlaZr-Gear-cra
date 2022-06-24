@@ -13,8 +13,13 @@ const upload = multer({
     return cb(null, true);
   }
 });
-const { authTest, registerUser, authValidToken, authLogout, forgotPassword, resetPassword, authRefreshToken, authDelete, verifyResetToken } = require('../controllers/authController');
+const { authDemo, authTest, registerUser, authValidToken, authLogout, forgotPassword, resetPassword, authRefreshToken, authDelete, verifyResetToken } = require('../controllers/authController');
 const { registerUserValidator, signinAuthValidator, forgotPasswordValidator, resetPasswordValidator, validatorResult } = require('../middleware/validator');
+
+// @route    GET auth/demo
+// @desc     run demo acct
+// @access   Public
+router.get('/demo', authDemo);
 
 // @route    GET /auth/ (endpoint: auth)
 // @desc     Test route / verify / backend / user_loaded

@@ -5,6 +5,48 @@ const pool = require('../config/db');
 const { refreshTokenString, resetTokenGenerator, accessTokenGenerator, refreshTokenGenerator, validateRefreshToken, validateResetToken, refreshTokenCookieOptions } = require('../middleware/jwtGenerator');
 const { signedUpMail, forgotPasswordMail, PasswordResetSuccessMail, bannedAccountMail } = require('../middleware/emailService');
 
+exports.authDemo = async (req, res, next) => {
+  let email = process.env.DEMO_EMAIL;
+  let password = process.env.DEMO_PASSWORD;
+
+  try {
+    const user = await pool.query(
+      'SELECT U.*, C.id AS cart_id FROM users AS U JOIN carts AS C ON C.user_id = U.id WHERE U.user_email = $1;', [email]
+    );
+
+    if (user.rows.length === 0) {
+      return res.status(400).json({ errors: [{ msg: "Invalid email or password."}] })
+    }
+
+    if (user.rows[0].role === 'banned') {
+      await bannedAccountMail(user.rows[0].user_email);
+      return res.status(400).json({ errors: [{ msg: "Account is banned / currently under review."}] });
+    }
+
+    const isMatch = await bcrypt.compare(
+      password, user.rows[0].user_password
+    );
+
+    if (!isMatch) {
+      return res.status(400).json({ errors: [{ msg: "Invalid email or password."}] });
+    }
+
+    const jwtToken = accessTokenGenerator(user.rows[0].id, user.rows[0].role, user.rows[0].cart_id);
+    user.rows[0].user_password = undefined;
+
+    return res.json({
+      status: "Successful login! [Demo]",
+      data: {
+        token: jwtToken,
+        userInfo: user.rows[0]
+      }
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error...");
+  }
+}
+
 // req.user accessible via token (authJWT), used to access user id via state.auth.user.id
 // *** Insomnia Tested / Passed / Works in App
 // /auth/

@@ -345,7 +345,8 @@
             top: 50.4px;
             padding: 5px 1rem 5px;
             &.guestLink {
-              height: 68px;
+              // height: 68px;
+              height: 96px;
               opacity: 1;
               transition: height 200ms linear;
             }
@@ -402,7 +403,8 @@
           top: 50.4px;
           padding: 5px 1rem 5px;
           &.guestLink {
-            height: 68px;
+            // height: 68px;
+            height: 96px;
             opacity: 1;
           }
           &.authLink {

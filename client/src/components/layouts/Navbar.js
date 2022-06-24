@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaCaretDown, FaBars, FaShoppingCart } from 'react-icons/fa';
 import ModeButton from './ModeButton';
-import { logout } from '../../redux/features/auth/authSlice';
+import { demoUser, logout } from '../../redux/features/auth/authSlice';
 import Search from './Search';
 // import CartList from './CartList';
 // import useClickOutside from '../../hooks/useClickOutside';
@@ -50,6 +50,10 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout({navigate, history: null}));
   }
+
+  const demoHandler = (e) => {
+    dispatch(demoUser(navigate));
+  };
 
   // const showCartHandler = (value) => {
   //   dispatch(setAlert(`Show Cart = ${value}`, 'success'));
@@ -99,6 +103,9 @@ const Navbar = () => {
 
   const guestLinks = (
     <>
+    <li className="nav__link-item--secondary">
+      <Link to="#" onClick={(e) => demoHandler(e)}>Try Demo</Link>
+    </li>
     <li className="nav__link-item--secondary">
       <Link to="/login">Login</Link>
     </li>

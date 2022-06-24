@@ -5,6 +5,16 @@ import { clearCartLogout } from "../cart/cartSlice";
 import { orderReset } from "../order/orderSlice";
 import { loadUser as loadUserSlice, clearAuth } from "./authSlice";
 
+
+const demoUser = async (navigate) => {
+  const res = await api.get('/auth/demo');
+  let result = res.data.data;
+  localStorage.setItem("token", JSON.stringify(result.token));
+  localStorage.setItem("__userInfo", JSON.stringify(result.userInfo));
+  navigate.push("/");
+  return result;
+};
+
 const loadUser = async (thunkAPI) => {
   const res = await api.get('/auth');
   let result = res.data.data;
@@ -83,6 +93,7 @@ const refreshAccessToken = async (newAccessToken, tokenExample) => {
 };
 
 const authService = {
+  demoUser,
   loadUser,
   registerUser,
   loginUser,

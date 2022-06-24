@@ -11,6 +11,25 @@ const initialState = {
   allowReset: false
 };
 
+
+export const demoUser = createAsyncThunk(
+  'auth/demo',
+  async ({navigate}, thunkAPI) => {
+    try {
+      return await authService.demoUser(navigate, thunkAPI);
+    } catch (err) {
+      const message =
+        (err.response &&
+          err.response.data &&
+          err.response.data.message) ||
+        err.message ||
+        err.toString()
+      toast.error("Failed to login (DEMO).", {theme: "colored", toastId: "LoginError"});
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const loadUser = createAsyncThunk(
   'auth/loadUser',
   async (_, thunkAPI) => {
@@ -190,6 +209,22 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(demoUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(demoUser.fulfilled, (state, action) => {
+        state.token = action.payload.token;
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.userInfo = action.payload.userInfo;
+        toast.success("Welcome!", {theme: "colored", toastId: "welcomeToastId"});
+      })
+      .addCase(demoUser.rejected, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = false;
+        state.userInfo = null;
+        state.error = true;
+      })
       .addCase(loadUser.pending, (state) => {
         state.loading = true;
       })
