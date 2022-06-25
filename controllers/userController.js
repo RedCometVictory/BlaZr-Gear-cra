@@ -358,13 +358,19 @@ exports.updateUserProfile = async (req, res, next) => {
 // /users/:user_id
 // @access  Private/Admin
 exports.updateUser = async (req, res, next) => {
+  let { id } = req.user;
   const { user_id } = req.params;
-  const { f_name, l_name, username, user_email, role } = req.body;
+  let { f_name, l_name, username, user_email, role } = req.body;
   try {
     const userToUpdate = await pool.query('SELECT f_name, l_name, username, user_email, role FROM users WHERE id = $1;', [user_id]);
 
     if (userToUpdate.rowCount === 0 || !userToUpdate) {
       return res.status(404).json({ errors: [{ msg: "User not found!" }] });
+    }
+    
+    // *** For Demo Acct, prevent role self demotion
+    if (id === user_id) {
+      role = 'admin';
     }
 
     if (userToUpdate) {

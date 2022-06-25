@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { FaCaretDown, FaBars, FaShoppingCart } from 'react-icons/fa';
 import ModeButton from './ModeButton';
 import { demoUser, logout } from '../../redux/features/auth/authSlice';
@@ -8,11 +9,17 @@ import Search from './Search';
 // import CartList from './CartList';
 // import useClickOutside from '../../hooks/useClickOutside';
 // import useWindow from '../../hooks/useWindow';
+let currentTheme;
+if (typeof window !== 'undefined') {
+  currentTheme = localStorage.getItem('theme');
+  if (!currentTheme) localStorage.setItem('theme', 'light')
+};
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const caretToggleRef = useRef();
+  // prevent flash of incorrect theme
   // const cartIconRef = useRef();
   const userAuth = useSelector(state => state.auth);
   const cart = useSelector(state => state.cart);
@@ -22,6 +29,7 @@ const Navbar = () => {
   const [caretChecked, setCaretChecked] = useState(false);
   // const [showCart, setShowCart] = useState(false);
   const [caretCheckedDesktop, setCaretCheckedDesktop] = useState(false);
+  const [ theme, setTheme ] = useState(currentTheme);
 
   // for use with cart list, if in the form of a sidebar
   // useClickOutside(cartIconRef, () => setShowCart(true));
@@ -119,7 +127,12 @@ const Navbar = () => {
       setCaretChecked(e.currentTarget.checked)
   };
 
-  return (
+  return (<>
+    <HelmetProvider>
+      <Helmet>
+        <html className={theme} />
+      </Helmet>
+    </HelmetProvider>
     <header className="nav">
       <div className="nav__logo">
         <h1><Link to="/" className="logo">BlaZr Gear</Link></h1>
@@ -205,14 +218,14 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="nav__theme-select small" >
-          <ModeButton />
+          <ModeButton theme={theme} setTheme={setTheme}/>
         </div>
         <div className="nav__theme-select large" >
-          <ModeButton />
+          <ModeButton theme={theme} setTheme={setTheme}/>
         </div>
         {/* <CartList ref={cartIconRef} showCart={showCart} setShowCart={setShowCart} cartItems={cartItems} /> */}
       </div>
     </header>
-  )
+  </>)
 };
 export default Navbar;
