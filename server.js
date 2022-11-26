@@ -92,9 +92,13 @@ app.get('/api/config/mapbox', (req, res) => {
 // Serve static assets in production - USE IN PRODUCTION DEPLOYMENT
 if (process.env.NODE_ENV === 'production') {
   // Set static folder - use in PRODUCTION DEPLOYMENT
-  app.use(express.static('client/build'));
+  // app.use(express.static('client/build'));
+  app.use(express.static(path.join(__dirname, './client/build')));
+  // app.get('*', (req, res) => {
+  //   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  // });
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, './client/build/index.html'));
   });
 }
 

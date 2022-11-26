@@ -9,7 +9,7 @@
 /config/sample.sql
 Z_IMPORTED
 Z_TO_IMPORT
-
+*.dump
 # testing
 /coverage
 
