@@ -11,7 +11,8 @@ const pool = require ('./config/db');
 
 // heroku address
 // const HOST = process.env.HEROKU_DOMAIN;
-const HOST = 'https://blazrgear.herokuapp.com';
+// const HOST = 'https://blazrgear.herokuapp.com';
+const HOST = 'https://blazrgear.cyclic.app';
 let whiteList;
 //  'https://www.sandbox.paypal.com'
 if (process.env.NODE_ENV === 'production') {
